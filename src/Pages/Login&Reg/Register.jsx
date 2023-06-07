@@ -32,7 +32,11 @@ const Register = () => {
             axiosSecure.post('/jwt', {email:user?.email})
             .then(res=> {
                 localStorage.setItem('access-token', res?.data?.token)
-                
+                axiosSecure.put(`/user/${user?.email}`, {name, email:user?.email, gender, address, phone, photo} )
+                .then(res=>{
+                    console.log(res.data);
+                    console.log('saved user in mongodb');
+                })
             })
             
         })
