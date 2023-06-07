@@ -1,10 +1,15 @@
 import { useForm } from "react-hook-form";
 import Button from "../../components/Button/Button";
 import FormFooter from "../../components/FormFooter/FormFooter";
+import { useContext } from "react";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 const Register = () => {
+    const {name} = useContext(AuthContext)
+    console.log(name);
     const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = data => console.log(data);
+
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="md:w-1/2 bg-pr mx-auto border rounded-xl font-semibold sm:p-11 p-6 shadow-lg">
