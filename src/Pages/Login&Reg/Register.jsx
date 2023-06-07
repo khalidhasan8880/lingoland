@@ -32,6 +32,7 @@ const Register = () => {
             axiosSecure.post('/jwt', {email:user?.email})
             .then(res=> {
                 localStorage.setItem('access-token', res?.data?.token)
+                
             })
             
         })
