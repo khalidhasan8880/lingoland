@@ -4,13 +4,13 @@ import Footer from "../Shared/Footer";
 
 const LayOut = () => {
     return (
-        <>
+        <div className="flex flex-col justify-center items-center min-h-screen">
             <Navbar></Navbar>
-            <div className="container mx-auto">
+            <div className="container flex-grow">
                 <Outlet></Outlet>
             </div>
             <Footer></Footer>
-        </>
+        </div>
     );
 };
 
