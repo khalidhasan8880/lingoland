@@ -1,5 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
-import logo from '../assets/icons/logo.jpg'
+import logo from '../assets/icons/logo.png'
 import { FaBars } from 'react-icons/fa'
 import { AiOutlineClose } from 'react-icons/ai'
 import { useState } from "react";
@@ -31,11 +31,11 @@ const Navbar = () => {
     </>
 
     return (
-        <div className="flex justify-between mt-0 backdrop-blur-sm  bg-opacity-30 fixed z-10 top-0 w-full px-4 sm:px-12 md:px-28 py-3">
+        <div className="flex justify-between bg-pr mt-0 backdrop-blur-sm  bg-opacity-30 fixed z-10 top-0 w-full px-4 sm:px-12 md:px-28 py-3">
             <Link to='/'>
                 <div className="flex items-center">
-                    <img className="w-10 sm:w-14" src={logo} alt="" />
-                    <h1 className="text-2xl sm:text-3xl">LINGOLAND</h1>
+                    <img className="w-10 sm:w-12" src={logo} alt="" />
+                    <h1 className="text-1xl sm:text-2xl">LINGOLAND</h1>
                 </div>
             </Link>
             <ul className="hidden sm:flex items-center gap-x-7 justify-between font-semibold">
