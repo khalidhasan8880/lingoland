@@ -1,10 +1,28 @@
 
 import { FcGoogle } from "react-icons/fc";
+import { useAuth } from "../../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const GoogleLogin = () => {
+    // hooks
+    const {continueWithGoogle} = useAuth()
+    const navigate = useNavigate()
+    const axiosSecure = useAxiosSecure()
     // handler
     const googleLoginHandler = () => {
-        console.log('clicked');
+        continueWithGoogle()
+        .then(res=>{
+           
+            axiosSecure.put(`/user/${res?.user?.email}`, {email:res?.user?.email, name:res?.user?.displayName})
+            .then(res=>{
+                console.log(res.data);
+                navigate('/')
+            })
+        })
+        .catch(err=>{
+            console.log(err);
+        })
     }
 
     return (

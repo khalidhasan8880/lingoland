@@ -1,9 +1,9 @@
 
 const Banner = () => {
     return (
-        <div>
+        <header>
             
-        </div>
+        </header>
     );
 };
 

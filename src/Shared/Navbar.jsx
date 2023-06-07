@@ -38,7 +38,7 @@ const Navbar = () => {
                     <h1 className="text-2xl sm:text-3xl">LINGOLAND</h1>
                 </div>
             </Link>
-            <ul className="hidden sm:flex items-center gap-x-7 justify-between sm:text-xl sm:font-semibold">
+            <ul className="hidden sm:flex items-center gap-x-7 justify-between font-semibold">
                 {navOptions}
             </ul>
 
@@ -55,7 +55,7 @@ const Navbar = () => {
 
             {
                 open &&
-                <ul className=" sm:hidden absolute right-4 top-12 sm:text-xl sm:font-semibold">
+                <ul className=" sm:hidden absolute right-4 top-12 font-semibold ">
                     {navOptions}
                 </ul>
             }

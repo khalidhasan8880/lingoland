@@ -1,9 +1,9 @@
 
 const Dashboard = () => {
     return (
-        <div>
+        <section>
             dashboard
-        </div>
+        </section>
     );
 };
 
