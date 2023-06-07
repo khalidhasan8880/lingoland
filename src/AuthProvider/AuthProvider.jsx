@@ -50,6 +50,7 @@ const AuthProvider = ({ children }) => {
         logIn,
         continueWithGoogle,
         createUser,
+        name:"khalid",
     }
     return (
         <AuthContext.Provider value={authInformation}>

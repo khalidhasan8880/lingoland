@@ -1,14 +1,44 @@
 import { useForm } from "react-hook-form";
 import Button from "../../components/Button/Button";
 import FormFooter from "../../components/FormFooter/FormFooter";
-import { useContext } from "react";
-import { AuthContext } from "../../AuthProvider/AuthProvider";
+
+import toast, { Toaster } from 'react-hot-toast';
+import { useAuth } from "../../hooks/useAuth";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+
+// import { useContext } from "react";
+// import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 const Register = () => {
-    const {name} = useContext(AuthContext)
-    console.log(name);
+    const axiosSecure = useAxiosSecure()
+    const { createUser, user } = useAuth()
+
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const onSubmit = data => console.log(data);
+    const onSubmit = data => {
+        // password validation
+        if (data.password !== data.confirmPassword) {
+            toast.error('Password does not matched');
+            return
+        }
+        if (data.password.length < 6) {
+            toast.error('password must be six character or more');
+            return
+        }
+
+        const { name, photo, email, password, gender, address, phone } = data
+        createUser(email,password)
+        .then(res=>{
+            console.log(res);
+            axiosSecure.post('/jwt', {email:user?.email})
+            .then(res=> {
+                localStorage.setItem('access-token', res?.data?.token)
+            })
+            
+        })
+        .catch(err=>{
+            console.log(err);
+        })
+    };
 
 
     return (
@@ -37,7 +67,7 @@ const Register = () => {
                         },
                     },
                     { required: true })} />
-                {errors.confirmPassword && <p className="text-red-600 ms-4"> {errors.password?.message} </p>}
+                {errors.password && <p className="text-red-600 ms-4"> {errors.password?.message} </p>}
             </div>
             <div className="my-7 ">
                 <label className="ms-5">Confirm Password*</label>
@@ -68,13 +98,13 @@ const Register = () => {
             </div>
             <div className="my-7 ">
                 <label className="ms-5">Phone Number</label>
-                <input placeholder="Type Your Phone Number" className="w-full px-4 py-3 border-2 my-1 rounded-full " {...register("phoneNumber")} />
+                <input placeholder="Type Your Phone Number" className="w-full px-4 py-3 border-2 my-1 rounded-full " {...register("phone")} />
             </div>
             {/* submit btn */}
             <Button>submit</Button>
             {/* footer */}
             <FormFooter redirect="/login" redirectTitle="Login"></FormFooter>
-
+            <Toaster />
         </form>
     );
 };

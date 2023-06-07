@@ -6,7 +6,7 @@ const LayOut = () => {
     return (
         <div className="flex flex-col justify-center items-center min-h-screen">
             <Navbar></Navbar>
-            <div className="container flex-grow">
+            <div className="container flex-grow px-4">
                 <Outlet></Outlet>
             </div>
             <Footer></Footer>
