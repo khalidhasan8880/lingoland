@@ -27,6 +27,9 @@ button {
 .text-pr{
     color: #3de09b;
 }
+.bg-pr{
+   background-color: #ebfbfa;
+}
 
 input:focus {
     border: 2px solid #3de09b;

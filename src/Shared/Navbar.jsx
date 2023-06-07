@@ -31,7 +31,7 @@ const Navbar = () => {
     </>
 
     return (
-        <div className="flex justify-between bg-[#ebfbfa] fixed z-10 top-2 w-full px-4 sm:px-12 md:px-28">
+        <div className="flex justify-between mt-0 backdrop-blur-sm  bg-opacity-30 fixed z-10 top-0 w-full px-4 sm:px-12 md:px-28 py-4">
             <Link to='/'>
                 <div className="flex items-center">
                     <img className="w-10 sm:w-14" src={logo} alt="" />
