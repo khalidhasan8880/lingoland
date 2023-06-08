@@ -3,11 +3,12 @@ import logo from '../assets/icons/logo.png'
 import { FaBars } from 'react-icons/fa'
 import { AiOutlineClose } from 'react-icons/ai'
 import { useState } from "react";
+import { useAuth } from "../hooks/useAuth";
 
 
 const Navbar = () => {
     const [open, setOpen] = useState(false)
-
+    const {user } = useAuth()
 
     // 
     const navOptions = <>
@@ -27,7 +28,7 @@ const Navbar = () => {
                 Classes
             </NavLink>
         </li>
-
+        <>{user?.email}</>
     </>
 
     return (

@@ -8,7 +8,7 @@ import Home from "./Pages/HomePage/Home/Home";
 import Dashboard from "./LayOut/Dashboard";
 import PrivetRoute from "./PrivetRoutes/PrivetRoute";
 import ManageUser from "./Pages/DashBoardPages/AdminPages/ManageUser";
-import AdminRoute from "./PrivetRoutes/AdminRoute";
+// import AdminRoute from "./PrivetRoutes/AdminRoute";
 
 const router = createBrowserRouter([
     {
@@ -35,7 +35,7 @@ const router = createBrowserRouter([
                 children:[
                     {
                         path:'manage_user',
-                        element:<AdminRoute><ManageUser></ManageUser></AdminRoute>
+                        element:<ManageUser></ManageUser>
                     }
                 ]
 

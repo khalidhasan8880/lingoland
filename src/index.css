@@ -30,7 +30,6 @@ button:hover{
 button:active{
     position: relative;
     top: 3px;
-    @apply px-5
 }
 
 .text-pr{

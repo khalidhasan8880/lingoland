@@ -1,40 +1,71 @@
 import axios from "axios";
-// import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const useAxiosSecure = () => {
-    // const navigate = useNavigate()
-    const axiosSecure = axios.create({
-        baseURL: 'http://localhost:5000/'
-    })
-
-
-    axiosSecure.interceptors.request.use(function (config) {
-        const token = localStorage.getItem('access-token')
-        if (token) {
-            config.headers.Authorization = token
-        }
-        
-        return config;
-      }, function (error) {
-        return Promise.reject(error);
-      });
-
    
-      axiosSecure.interceptors.response.use( async (res, err) => {
-        if (res) {
-            return res
-        }
-        if (err) {
-            if (res.status === 401 && res.status=== 403) {
-                // navigate('/')
-                console.log('eroor shongothito hoyche ');
+    const axiosSecure = axios.create({
+        baseURL: import.meta.env.VITE_API
+    });
+    useEffect(() => {
+        // Create an instance of Axios
+        
+        
+      
+        // Request interceptor
+        const requestInterceptor = axiosSecure.interceptors.request.use(
+          (config) => {
+            // Modify the request config if needed (e.g., add headers, authentication tokens)
+            const token = localStorage.getItem('access-token')
+            if (token) {
+                
+                config.headers.Authorization = `Bearer ${token}`;
             }
-            return err
-        }
+            return config;
+          },
+          (error) => {
+            // Handle request errors
+            console.error('Request Interceptor Error:', error);
+            return Promise.reject(error);
+          }
+        );
+    
+        // Response interceptor
+        const responseInterceptor = axiosSecure.interceptors.response.use(
+          (response) => {
+            // Process the response data if needed
+            // console.log('Response Interceptor:', response);
+            return response;
+          },
+          (error) => {
+            // Handle response errors
+            // console.error('Response Interceptor Error:', error);
+            return Promise.reject(error);
+          }
+        );
+    
+        // Clean up interceptors on component unmount
+        return () => {
+          axiosSecure.interceptors.request.eject(requestInterceptor);
+          axiosSecure.interceptors.response.eject(responseInterceptor);
+        };
 
-    })
+        
+      }, [axiosSecure]);
+     return axiosSecure
 
-    return axiosSecure
 };
 
 export default useAxiosSecure;
+
+
+
+
+
+
+
+
+
+
+
+
+

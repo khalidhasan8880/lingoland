@@ -26,24 +26,24 @@ const AuthProvider = ({ children }) => {
     }
 
     const continueWithGoogle = () => {
+        setLoading(true)
         return signInWithPopup(auth, googleProvider)
     }
 
-
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-            if (user) {
-                axiosSecure.post('/jwt', { email: user?.email })
-                    .then(res => {
-                        localStorage.setItem('access-token', res?.data?.token)
-                        setLoading(false)
-                    })
-                setUser(user)
-                
+        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+            if (currentUser) {
+                setUser(currentUser)
+                setLoading(false)
+                axiosSecure.post('/jwt',{email:currentUser?.email})
+                .then((res)=>{
+                    localStorage.setItem('access-token', res?.data?.token)
+                })
+
             } else {
                 localStorage.removeItem('access-token')
-                setUser(null)
-                setLoading(false)
+                // setUser(null)
+                // setLoading(false)
             }
         });
 

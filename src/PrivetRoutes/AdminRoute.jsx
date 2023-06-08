@@ -1,23 +1,22 @@
 import { Navigate } from "react-router-dom";
-import Loading from "../components/Loading/Loading";
 import { useAuth } from "../hooks/useAuth";
 import { useRole } from "../hooks/useRole";
+import Loading from "../components/Loading/Loading";
 
 
 
 const AdminRoute = ({ children }) => {
-    // hooks
-    const { user, loading } = useAuth()
-    const role = useRole()
+   const [data, isLoading] = useRole()
+   const {user, loading} = useAuth()
     // conditions
-    if (loading) {
-        <Loading></Loading>
+    if ( loading || isLoading ) {
+        return <Loading></Loading>
     }
-    if (user && role === 'admin') {
+    if (user && data?.role === 'admin') {
         return children
     }
 
-    return <Navigate to='/login'></Navigate>
+    return <Navigate to='/login' replace></Navigate>
 };
 
 export default AdminRoute;
