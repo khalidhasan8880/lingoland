@@ -1,11 +1,12 @@
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import Loading from "../components/Loading/Loading";
 
 const PrivetRoute = ({children}) => {
 
     const {user, loading} = useAuth()
     if (loading) {
-        return <h1 className="text-center animate-ping">loading...</h1>
+        return <Loading></Loading>
     }
     if (user) {
         return children
