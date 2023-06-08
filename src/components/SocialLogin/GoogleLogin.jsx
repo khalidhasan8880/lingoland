@@ -14,7 +14,7 @@ const GoogleLogin = () => {
         continueWithGoogle()
         .then(res=>{
            
-            axiosSecure.put(`/user/${res?.user?.email}`, {email:res?.user?.email, name:res?.user?.displayName})
+            axiosSecure.put(`/users/${res?.user?.email}`, {email:res?.user?.email, name:res?.user?.displayName})
             .then(res=>{
                 console.log(res.data);
                 navigate('/')
