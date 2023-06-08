@@ -20,15 +20,24 @@ p {
     @apply font-extralight
 }
 
-/* button {
-    color: #ebfbfa;
-} */
+button{
+    color: #defaf9;
+}
+
+button:hover{
+    color: #ffffff;
+}
+button:active{
+    position: relative;
+    top: 3px;
+    @apply px-5
+}
 
 .text-pr{
     color: #3de09b;
 }
 .bg-pr{
-   background-color: #e3f9f8;
+   background-color: #ebfbfa;
 }
 
 input:focus {

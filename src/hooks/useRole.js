@@ -7,7 +7,7 @@ export const useRole = ()=>{
     const axiosSecure = useAxiosSecure()
     const {user} = useAuth()
 
-    axiosSecure.get(`/users/role/${user?.email}`,)
+    axiosSecure.get(`/users/role/${user?.email}`)
     .then(res=>{
         console.log(res.data);
         setRole(res?.data?.role)

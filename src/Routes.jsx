@@ -7,6 +7,8 @@ import Login from "./Pages/Login&Reg/Login";
 import Home from "./Pages/HomePage/Home/Home";
 import Dashboard from "./LayOut/Dashboard";
 import PrivetRoute from "./PrivetRoutes/PrivetRoute";
+import ManageUser from "./Pages/DashBoardPages/AdminPages/ManageUser";
+import AdminRoute from "./PrivetRoutes/AdminRoute";
 
 const router = createBrowserRouter([
     {
@@ -29,7 +31,14 @@ const router = createBrowserRouter([
             // dashboard
             {
                 path:'/dashboard',
-                element:<PrivetRoute><Dashboard></Dashboard></PrivetRoute>
+                element:<PrivetRoute><Dashboard></Dashboard></PrivetRoute>,
+                children:[
+                    {
+                        path:'manage_user',
+                        element:<AdminRoute><ManageUser></ManageUser></AdminRoute>
+                    }
+                ]
+
             },
         ]
     },

@@ -1,15 +1,18 @@
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useRole } from "../../../hooks/useRole";
 
 const ManageUser = () => {
     const axiosSecure = useAxiosSecure()
-    
-    axiosSecure.get('/users')
+    const role = useRole()
+    console.log(role);
+    axiosSecure.get('/users',)
     .then(res=>{
         console.log(res.data);
     })
+
     return (
         <div>
-            
+            Manage user
         </div>
     );
 };

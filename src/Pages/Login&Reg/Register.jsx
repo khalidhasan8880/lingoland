@@ -28,16 +28,13 @@ const Register = () => {
         const { name, photo, email, password, gender, address, phone } = data
         createUser(email,password)
         .then(res=>{
-            console.log(res);
-            axiosSecure.post('/jwt', {email:user?.email})
-            .then(res=> {
-                localStorage.setItem('access-token', res?.data?.token)
-                axiosSecure.put(`/users/${user?.email}`, {name, email:user?.email, gender, address, phone, photo} )
+            axiosSecure.put(`/users/${user?.email}`, {name, email:user?.email, gender, address, phone, photo} )
                 .then(res=>{
                     console.log(res.data);
                     console.log('saved user in mongodb');
                 })
-            })
+            console.log(res);
+            
             
         })
         .catch(err=>{

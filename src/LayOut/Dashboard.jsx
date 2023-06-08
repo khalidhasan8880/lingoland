@@ -27,7 +27,7 @@ const Dashboard = () => {
                 </li>
                 <li>
                     <NavLink
-                        to='/dashboard'
+                        to='/dashboard/manage_user'
                         className={({ isActive }) => (isActive ? 'text-pr text-center flex items-center gap-2 justify-center py-2 rounded-md text-1xl font-semibold' : 'text-center flex items-center gap-2 justify-center py-2 rounded-md text-1xl font-semibold')}
                     >
                         <FaUsers size={22}></FaUsers> <span>Manage Users</span>
@@ -47,7 +47,7 @@ const Dashboard = () => {
                     <img className="sm:w-20 w-10 sm:h-20 h-10 rounded-full" src={user?.photoURL} alt="" />
                     : 
                     <div className="flex justify-center items-center sm:w-20 w-10 sm:h-20 h-10 rounded-full bg-pr">
-                        <FaUser size={40}></FaUser>
+                        <FaUser size={30}></FaUser>
                     </div>
                 }
                 <div className="flex justify-between items-start flex-col">
