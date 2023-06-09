@@ -1,6 +1,6 @@
 
 import { useAuth } from "../hooks/useAuth";
-import { FaBars, FaUser, FaUsers } from "react-icons/fa";
+import { FaBars, FaBookReader, FaUser, FaUsers } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import { AiOutlineClose, AiOutlineVideoCameraAdd } from "react-icons/ai";
@@ -52,10 +52,10 @@ const Dashboard = () => {
                 </li>
                 <li>
                     <NavLink
-                        to='/dashboard/manage_user'
+                        to='/dashboard/my_classes'
                         className={({ isActive }) => (isActive ? 'text-pr text-center flex items-center gap-2 justify-center py-2 rounded-md text-1xl font-semibold' : 'text-center flex items-center gap-2 justify-center py-2 rounded-md text-1xl font-semibold')}
                     >
-                        {/* <FaUsers size={22}></FaUsers> <span></span> */}
+                        <FaBookReader size={22}></FaBookReader><span>My Classes</span>
                     </NavLink>
                 </li>
             </>
@@ -87,14 +87,14 @@ const Dashboard = () => {
 
 
 
-            <div onClick={() => setOpenDashboardNav(!openDAshboardNav)}  title="Drawer" className="w-16 h-16 rounded-full backdrop-blur-sm md:hidden flex justify-center items-center absolute bottom-10 right-7 bg-pr">
+            <div onClick={() => setOpenDashboardNav(!openDAshboardNav)}  title="Drawer" className="w-16 h-16 rounded-full backdrop-blur-sm md:hidden flex justify-center items-center fixed bottom-10 right-7 bg-pr">
                 <button >{openDAshboardNav ? <AiOutlineClose className="text-pr" size={33}></AiOutlineClose> : <FaBars className="text-pr" size={33}></FaBars>}</button>
             </div>
 
 
 
             {
-                openDAshboardNav && <div className="flex flex-col min-w-h-96 md:hidden backdrop-blur-xl  absolute left-0 w-4/6 ">
+                openDAshboardNav && <div className="flex  flex-col min-w-h-96 md:hidden backdrop-blur-xl  fixed left-0 w-4/6 ">
 
                     <ul className="md:w-96 py-4 px-1 ">
                         {drawerLinks}
