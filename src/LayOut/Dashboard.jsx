@@ -3,8 +3,9 @@ import { useAuth } from "../hooks/useAuth";
 import { FaBars, FaUser, FaUsers } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
-import { AiOutlineClose } from "react-icons/ai";
+import { AiOutlineClose, AiOutlineVideoCameraAdd } from "react-icons/ai";
 import { useRole } from "../hooks/useRole";
+import Loading from "../components/Loading/Loading";
 
 const Dashboard = () => {
     // Hooks
@@ -12,10 +13,13 @@ const Dashboard = () => {
     const [data, ] =useRole()
     const [openDAshboardNav, setOpenDashboardNav] = useState(false)
     const [drawerLinks, setDrawerLinks] = useState('')
+    const [usersRole, isLoading] =useRole()
 
+    if (isLoading) {
+        <Loading></Loading>
+    }
 
-
-    const role = 'admin'
+    
     useEffect(() => {
         const adminDrawerLinks =
             <>
@@ -36,11 +40,32 @@ const Dashboard = () => {
                     </NavLink>
                 </li>
             </>
-        if (role === 'admin') {
+        const instructorDrawerLinks =
+            <>
+                <li>
+                    <NavLink
+                        to='/dashboard/add_class'
+                        className={({ isActive }) => (isActive ? 'text-pr text-center flex items-center gap-2 justify-center py-2 rounded-md text-1xl font-semibold' : 'text-center flex items-center gap-2 justify-center py-2 rounded-md text-1xl font-semibold')}
+                    >
+                        <AiOutlineVideoCameraAdd size={22}></AiOutlineVideoCameraAdd><span>Add Class</span>
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink
+                        to='/dashboard/manage_user'
+                        className={({ isActive }) => (isActive ? 'text-pr text-center flex items-center gap-2 justify-center py-2 rounded-md text-1xl font-semibold' : 'text-center flex items-center gap-2 justify-center py-2 rounded-md text-1xl font-semibold')}
+                    >
+                        {/* <FaUsers size={22}></FaUsers> <span></span> */}
+                    </NavLink>
+                </li>
+            </>
+        if (usersRole?.role === 'admin') {
             setDrawerLinks(adminDrawerLinks)
+        }else if(usersRole?.role === 'instructor'){
+            setDrawerLinks(instructorDrawerLinks)
         }
 
-    }, [])
+    }, [usersRole])
     return (
         <section>
             <div className="my-5 flex gap-x-4 items-center">
@@ -69,7 +94,7 @@ const Dashboard = () => {
 
 
             {
-                openDAshboardNav && <div className="flex flex-col md:hidden backdrop-blur-xl bg-opacity-30 items-center justify-center absolute left-0 w-4/6 bg-pr">
+                openDAshboardNav && <div className="flex flex-col min-w-h-96 md:hidden backdrop-blur-xl  absolute left-0 w-4/6 ">
 
                     <ul className="md:w-96 py-4 px-1 ">
                         {drawerLinks}
@@ -79,7 +104,7 @@ const Dashboard = () => {
 
             <div className="flex">
 
-                <ul className="md:w-96  py-2 px-1 hidden md:block  bg-pr">
+                <ul className="md:w-96 h-96 py-2 px-1 hidden md:block ">
                     {
                         drawerLinks
                     }

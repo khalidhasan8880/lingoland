@@ -17,10 +17,10 @@ const ManageUser = () => {
     let [updateState, setUpdateState] = useState(null)
     let [userId, setUserId] = useState(null)
 
-    // if (confirm) {
-    //     console.log('confimed');
-    //     closeModal()
-    // }
+    
+    if (confirm) {
+        closeModal()
+    }
 
     function closeModal() {
         setIsOpen(false)
@@ -46,7 +46,7 @@ const ManageUser = () => {
                 console.log(res.data);
                 setUsers(res.data)
             })
-    }, [])
+    }, [confirm])
 
 
 
@@ -65,7 +65,7 @@ const ManageUser = () => {
                 })
                 .catch(err => {
                     console.log(err);
-
+                    toast.error('request unsuccessful')
                 })
         }
     })
@@ -76,13 +76,13 @@ const ManageUser = () => {
             axiosSecure.delete(`/users/${updateState}/${userId}`)
             .then(res=>{
                 console.log(res.data);
-                closeModal()
                 if (res.data?.deletedCount) {
                     toast.success('user deleted successful')
                 }
             })
             .catch(err=>{
                 console.log(err);
+                toast.error('request unsuccessful')
             })
         }
     },[confirm])
@@ -164,7 +164,7 @@ const ManageUser = () => {
                                         <FaUserCog className="text-center ms-3" onClick={() => modalDataHandler(user)} size={23}></FaUserCog>
                                     </td>
                                     <td className="p-2 hidden sm:table-cell">
-                                    <button onClick={()=>userDeleteHandler(user?.id, 'delete')} className="text-sm bg-[#e03d3de3] rounded-xl px-2  text-center text-white"> Delete </button>
+                                    <button onClick={()=>userDeleteHandler(user?._id, 'delete')} className="text-sm bg-[#e03d3de3] rounded-xl px-2  text-center text-white"> Delete </button>
                                     </td>
 
                                 </tr>

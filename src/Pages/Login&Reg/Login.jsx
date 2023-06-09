@@ -3,11 +3,27 @@ import Button from "../../components/Button/Button";
 import FormFooter from "../../components/FormFooter/FormFooter";
 import { useForm } from "react-hook-form";
 import { AiOutlineEyeInvisible } from "react-icons/ai"
+import { useAuth } from "../../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 const Login = () => {
     const [errorMessage, setErrorMessage] = useState(null)
+    const {logIn}=useAuth()
     const [showPass, setShowPass] = useState(false)
     const { register, handleSubmit } = useForm();
-    const onSubmit = data => console.log(data);
+    const navigate= useNavigate()
+    const onSubmit = data => 
+    {
+        console.log(data);
+        logIn(data.email, data.password)
+        .then(res=>{
+            console.log(res);
+            navigate('/')
+        })
+        .catch(err=>{
+            console.log(err);
+        })
+    }
+    ;
 
 
 
@@ -16,7 +32,7 @@ const Login = () => {
             <h1 className="text-center text-3xl font-bold ">Please Login</h1>
             <div className="my-7 ">
                 <label className="ms-5">Email</label>
-                <input placeholder="Type Your Name" className="w-full px-4 py-3 border-2 my-1 rounded-full " {...register("name", { required: true })} />
+                <input placeholder="Type Your Email" className="w-full px-4 py-3 border-2 my-1 rounded-full " {...register("email", { required: true })} />
             </div>
             <div className="my-7 ">
                 <label className="ms-5">Password</label>

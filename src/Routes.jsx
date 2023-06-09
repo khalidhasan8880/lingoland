@@ -9,6 +9,8 @@ import Dashboard from "./LayOut/Dashboard";
 import PrivetRoute from "./PrivetRoutes/PrivetRoute";
 import ManageUser from "./Pages/DashBoardPages/AdminPages/ManageUser";
 import AdminRoute from "./PrivetRoutes/AdminRoute";
+import InstructorRoute from "./PrivetRoutes/InstructorRoute";
+import AddClass from "./Pages/DashBoardPages/InstructorPages/AddClass";
 // import AdminRoute from "./PrivetRoutes/AdminRoute";
 
 const router = createBrowserRouter([
@@ -37,7 +39,11 @@ const router = createBrowserRouter([
                     {
                         path:'manage_user',
                         element:<AdminRoute><ManageUser></ManageUser></AdminRoute>
-                    }
+                    },
+                    {
+                        path:'add_class',
+                        element:<InstructorRoute><AddClass></AddClass></InstructorRoute>
+                    },
                 ]
 
             },
