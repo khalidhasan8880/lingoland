@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query"
 export const useRole = ()=>{
     const axiosSecure = useAxiosSecure()
     const {loading, user} = useAuth()
-    const { data, isLoading} = useQuery({
+    const { data:usersRole, isLoading} = useQuery({
         queryKey: ['userRole'],
         
         enabled: !loading && !!localStorage.getItem('access-token'),
@@ -17,5 +17,5 @@ export const useRole = ()=>{
         }
     })
 
-    return [data, isLoading]
+    return [usersRole, isLoading]
 }

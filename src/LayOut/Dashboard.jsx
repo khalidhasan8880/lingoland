@@ -4,10 +4,12 @@ import { FaBars, FaUser, FaUsers } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import { AiOutlineClose } from "react-icons/ai";
+import { useRole } from "../hooks/useRole";
 
 const Dashboard = () => {
     // Hooks
     const { user } = useAuth()
+    const [data, ] =useRole()
     const [openDAshboardNav, setOpenDashboardNav] = useState(false)
     const [drawerLinks, setDrawerLinks] = useState('')
 
@@ -54,14 +56,14 @@ const Dashboard = () => {
                     <h1 className="sm:text-xl ">Welcome Back {user?.displayName}</h1>
                     <h1 className="sm:text-1xl text-sm">{user?.email}</h1>
                     {/* TODO: SHOW DYNAMIC ROLE */}
-                    <span className="text-sm bg-[#3de09ce3] rounded-xl px-2  text-center text-white">admin</span>
+                    <span className="text-sm bg-[#3de09ce3] rounded-xl px-2  text-center text-white">{data?.role}</span>
                 </div>
             </div>
 
 
 
-            <div title="Drawer" className="w-20 h-20 rounded-full backdrop-blur-sm md:hidden flex justify-center items-center absolute bottom-5 right-5 bg-pr">
-                <button onClick={() => setOpenDashboardNav(!openDAshboardNav)} >{openDAshboardNav ? <AiOutlineClose className="text-pr" size={33}></AiOutlineClose> : <FaBars className="text-pr" size={33}></FaBars>}</button>
+            <div onClick={() => setOpenDashboardNav(!openDAshboardNav)}  title="Drawer" className="w-16 h-16 rounded-full backdrop-blur-sm md:hidden flex justify-center items-center absolute bottom-10 right-7 bg-pr">
+                <button >{openDAshboardNav ? <AiOutlineClose className="text-pr" size={33}></AiOutlineClose> : <FaBars className="text-pr" size={33}></FaBars>}</button>
             </div>
 
 
@@ -77,7 +79,7 @@ const Dashboard = () => {
 
             <div className="flex">
 
-                <ul className="md:w-96  py-2 px-1 hidden md:grid divide-y-2 bg-pr">
+                <ul className="md:w-96  py-2 px-1 hidden md:block  bg-pr">
                     {
                         drawerLinks
                     }

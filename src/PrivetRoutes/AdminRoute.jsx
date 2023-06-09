@@ -6,13 +6,13 @@ import Loading from "../components/Loading/Loading";
 
 
 const AdminRoute = ({ children }) => {
-   const [data, isLoading] = useRole()
+   const [usersRole, isLoading] = useRole()
    const {user, loading} = useAuth()
     // conditions
     if ( loading || isLoading ) {
         return <Loading></Loading>
     }
-    if (user && data?.role === 'admin') {
+    if (user && usersRole?.role === 'admin') {
         return children
     }
 
