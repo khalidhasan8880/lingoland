@@ -88,7 +88,7 @@ const Register = () => {
             {/* optional */}
             <div className="my-7 ">
                 <label className="ms-5">Select Gender</label>
-                <select className="w-full px-4 py-3 border-2 my-1 rounded-full" {...register("gender")}>
+                <select defaultValue='' className="w-full px-4 py-3 border-2 my-1 rounded-full" {...register("gender")}>
                     <option value="female">female</option>
                     <option value="male">male</option>
                     <option value="other">other</option>
