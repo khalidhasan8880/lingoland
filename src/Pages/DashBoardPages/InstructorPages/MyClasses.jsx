@@ -22,6 +22,17 @@ const MyClasses = () => {
     const { user } = useAuth()
 
 
+
+    function closeModal() {
+        setIsOpen(false)
+        
+    }
+
+    function openModal() {
+        setIsOpen(true)
+    }
+
+
     // react hook from handler
     const onSubmit = data => {
         console.log(data);
@@ -31,6 +42,9 @@ const MyClasses = () => {
                 refetch()
             })
     };
+
+
+
     // useEffect(() => {
     //     axiosSecure.get(`/classes/${user?.email}`,)
     //         .then(res => {
@@ -60,8 +74,9 @@ const MyClasses = () => {
 
 
     const viewFeedBackHandler = (feedback) => {
+        setActionModal('feedback')
         setModalContent(feedback)
-        setIsOpen(true)
+        openModal()
     }
 
 
@@ -141,11 +156,11 @@ const MyClasses = () => {
                                             </td>
 
                                             <td className="p-2 hidden sm:table-cell">
-                                                {cls?.enrolledCount}
+                                                {cls?.enrolledStudent}
                                             </td>
                                             <td className="p-2 hidden sm:table-cell">
                                                 <span
-                                                    className="rounded-full py-1 px-2"> {cls?.status}
+                                                    className={`rounded-full px-2 ${cls?.status === "approved" ? 'bg-[#3de09b] text-white' : ''}` }> {cls?.status}
                                                 </span>
 
                                             </td>
@@ -155,7 +170,10 @@ const MyClasses = () => {
                                                 <FaEdit onClick={() => editClassHandler(cls)} size={22}></FaEdit>
                                             </td>
                                             <td className="p-2">
-                                                <button className="hover:text-[#3de09b]" onClick={() => viewFeedBackHandler(cls?.feedback)}>
+                                                <button 
+                                                disabled={cls?.status ==='deny' && cls?.feedback  ? false : true} 
+                                                className={cls?.status ==='deny' && cls?.feedback  ? '' : "text-white active::top-0"}
+                                                 onClick={() => viewFeedBackHandler(cls?.feedback)}>
                                                     View FeedBack
                                                 </button>
                                             </td>
@@ -187,7 +205,7 @@ const MyClasses = () => {
                     <Dialog
                         open={isOpen}
                         onClose={() => {
-                            setIsOpen(false)
+                            closeModal()
                             setActionModal(null)
                         }}
                         className="relative z-50"
@@ -204,10 +222,10 @@ const MyClasses = () => {
                                 <Dialog.Panel className="mx-auto">
                                     {
                                         actionModal === 'feedback' ?
-                                            <div>
+                                            <div className="bg-white p-11 rounded-xl">
                                                 <Dialog.Title className='text-3xl text-center'>FeedBack By Admin</Dialog.Title>
                                                 {
-                                                    modalContent ? modalContent : 'no feedback'
+                                                    modalContent ? <p className="mt-7 text-center">{modalContent}</p> : 'no feedback'
                                                 }
                                             </div>
                                             :

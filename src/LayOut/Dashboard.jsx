@@ -1,6 +1,7 @@
 
 import { useAuth } from "../hooks/useAuth";
 import { FaBars, FaBookReader, FaEdit, FaUser, FaUsers } from "react-icons/fa";
+import { ImEnter } from "react-icons/im";
 import { useEffect, useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import { AiOutlineClose, AiOutlineVideoCameraAdd } from "react-icons/ai";
@@ -59,10 +60,31 @@ const Dashboard = () => {
                     </NavLink>
                 </li>
             </>
+        const studentDrawerLinks = 
+        <>
+                <li>
+                    <NavLink
+                        to='/dashboard/my_enrolled_class'
+                        className={({ isActive }) => (isActive ? 'text-pr flex items-center gap-2 py-2 rounded-md text-1xl font-semibold' : 'text-center flex items-center gap-2 py-2 rounded-md text-1xl font-semibold')}
+                    >
+                        <ImEnter size={22}></ImEnter> <span>Enrolled Classes</span>
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink
+                        to='/dashboard/my_selected_class'
+                        className={({ isActive }) => (isActive ? 'text-pr flex items-center gap-2 py-2 rounded-md text-1xl font-semibold' : 'text-center flex items-center gap-2 py-2 rounded-md text-1xl font-semibold')}
+                    >
+                        <FaBookReader size={22}></FaBookReader><span> My Selected Class</span>
+                    </NavLink>
+                </li>
+            </>
         if (usersRole?.role === 'admin') {
             setDrawerLinks(adminDrawerLinks)
         }else if(usersRole?.role === 'instructor'){
             setDrawerLinks(instructorDrawerLinks)
+        }else{
+            setDrawerLinks(studentDrawerLinks)
         }
 
     }, [usersRole])

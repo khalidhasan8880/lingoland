@@ -7,12 +7,13 @@ import { Dialog, Transition } from "@headlessui/react";
 import { useForm } from "react-hook-form";
 import { Helmet } from "react-helmet-async";
 import Button from "../../../components/Button/Button";
+import { Toaster, toast } from "react-hot-toast";
 
 const ManageClasses = () => {
     const { register, handleSubmit, } = useForm();
     const axiosSecure = useAxiosSecure()
     let [isOpen, setIsOpen] = useState(false)
-    const [classes, isLoading] = useClasses()
+    const [classes, isLoading, refetch] = useClasses()
     const [id, setId] = useState('')
     // modal open & close handler function
     function closeModal() {
@@ -28,13 +29,18 @@ const ManageClasses = () => {
         axiosSecure.patch(`/classes/approve/${id}`)
             .then(res => {
                 console.log(res.data);
+                refetch()
             })
     }
     // deny 
     const onSubmit = data => {
+        closeModal()
         axiosSecure.patch(`/classes/feedback/${id}`, data)
         .then(res=>{
             console.log(res.data);
+            toast.success('success')
+            refetch()
+
         })
         .catch(err=>{
             console.log(err);
@@ -51,6 +57,7 @@ const ManageClasses = () => {
             {
                 classes.length > 0 ?
                     <div>
+                        <Toaster></Toaster>
                         <Helmet>
                             <title>LINGOLAND | Manage Classes </title>
                         </Helmet>
@@ -121,14 +128,15 @@ const ManageClasses = () => {
                                                 <td className="p-2 hidden sm:table-cell">
                                                     <div className="flex gap-x-2">
                                                         <button
-                                                        disabled={cls?.status !== 'approved' ? false : true}
+                                                        disabled={cls?.status !== 'approved' && cls?.status !== 'deny' ? false : true}
                                                             onClick={() => approveHandler(cls?._id)}
-                                                            className={`active:top-0 rounded-full py-1 px-2 text-white ${cls?.status !== 'approved' ? 'bg-[#3de09b] ' : 'bg-[#98ceb7]'}`}>Approve
+                                                            className={`active:top-0 rounded-full py-1 px-2 text-white ${cls?.status !== 'approved'  && cls?.status !== 'deny'? 'bg-[#3de09b] ' : 'bg-[#98ceb7]'}`}>Approve
                                                         </button>
                                                         <button
-                                                            disabled={cls?.status !== 'approved' ? false : true}
+                                                            disabled={cls?.status === 'deny' || cls?.status === 'approved' ? true : false}
+                                                            className={`rounded-full px-2 text-white ${cls?.status === 'deny' || cls?.status === 'approved'  ? 'bg-red-200' : 'bg-red-500'}`}
                                                             onClick={() => denyHandler(cls?._id)}
-                                                            className={`active:top-0 rounded-full py-1 px-2 text-white ${cls?.status !== 'approved' ? 'bg-red-500 ' : 'bg-red-200'}`}>Deny
+                                                            >Deny
                                                         </button>
                                                     </div>
                                                 </td>
