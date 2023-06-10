@@ -6,28 +6,19 @@ import { useAuth } from "../../../hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import { useRole } from "../../../hooks/useRole";
 import Loading from "../../../components/Loading/Loading";
+import PopularClasses from "../PopularClasses/PopularClasses";
 
 const Home = () => {
+    
+
     // const axiosSecure = useAxiosSecure()
-    // const {  loading } = useAuth()
-    // const { data} = useQuery({
-    //     queryKey: ['data'],
-        
-    //     enabled: !loading && !!localStorage.getItem('access-token'),
-    //     queryFn: async () => {
-
-    //         return axiosSecure.get('/test')
-    //         .then(res=>res.data)
-    //     }
+    // const {data:classes, isLoading} = useQuery({
+    //     queryKey:['classes'],
+    //     queryFn:async()=> axiosSecure.get('/classes').then(res=>res.data)
     // })
-    // console.log(data);
-
-    const [data, isLoading] = useRole()
-    console.log(data);
-
-    if (isLoading) {
-        return <Loading></Loading>
-    }
+    // if (isLoading) {
+    //     return <Loading></Loading>
+    // }
     return (
         <>
             <Helmet>
@@ -35,6 +26,11 @@ const Home = () => {
             </Helmet>
 
             <Banner></Banner>
+
+
+            {/* ---------------------------------------------------- */}
+            <PopularClasses></PopularClasses>
+
         </>
     );
 };

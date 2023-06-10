@@ -25,7 +25,7 @@ const MyClasses = () => {
 
     function closeModal() {
         setIsOpen(false)
-        
+
     }
 
     function openModal() {
@@ -57,7 +57,7 @@ const MyClasses = () => {
     //         })
     // }, [])
     const { data: classes = [], isLoading: loading, refetch } = useQuery({
-        queryKey: ['classes'],
+        queryKey: ['classes', user?.email],
         queryFn: async () => {
             return axiosSecure.get(`/classes/${user?.email}`,)
                 .then(res => {
@@ -156,11 +156,11 @@ const MyClasses = () => {
                                             </td>
 
                                             <td className="p-2 hidden sm:table-cell">
-                                                {cls?.enrolledStudent}
+                                                {cls?.enrolledStudents}
                                             </td>
                                             <td className="p-2 hidden sm:table-cell">
                                                 <span
-                                                    className={`rounded-full px-2 ${cls?.status === "approved" ? 'bg-[#3de09b] text-white' : ''}` }> {cls?.status}
+                                                    className={`rounded-full px-2 ${cls?.status === "approved" ? 'bg-[#3de09b] text-white' : ''}`}> {cls?.status}
                                                 </span>
 
                                             </td>
@@ -170,10 +170,10 @@ const MyClasses = () => {
                                                 <FaEdit onClick={() => editClassHandler(cls)} size={22}></FaEdit>
                                             </td>
                                             <td className="p-2">
-                                                <button 
-                                                disabled={cls?.status ==='deny' && cls?.feedback  ? false : true} 
-                                                className={cls?.status ==='deny' && cls?.feedback  ? '' : "text-white active::top-0"}
-                                                 onClick={() => viewFeedBackHandler(cls?.feedback)}>
+                                                <button
+                                                    disabled={cls?.status === 'deny' && cls?.feedback ? false : true}
+                                                    className={cls?.status === 'deny' && cls?.feedback ? '' : "text-white active::top-0"}
+                                                    onClick={() => viewFeedBackHandler(cls?.feedback)}>
                                                     View FeedBack
                                                 </button>
                                             </td>
@@ -271,6 +271,10 @@ const MyClasses = () => {
                                                     <div className="my-7 ">
                                                         <label className="ms-5">Photo Url*</label>
                                                         <input defaultValue={modalContent?.photo} placeholder="Paste Your Photo_url" className="w-full px-4 py-3 border-2 my-1 rounded-full " {...register("photo", { required: true })} />
+                                                    </div>
+                                                    <div className="my-7 ">
+                                                        <label className="ms-5">Add A Class Sort Title*</label>
+                                                        <input placeholder="Your Class Title" className="w-full px-4 py-3 border-2 my-1 rounded-full " {...register("title", { required: true })} />
                                                     </div>
                                                     <input hidden type="text" defaultValue='pending' {...register("status")} />
                                                     <input hidden type="text" defaultValue={modalContent?._id} {...register("_id")} />

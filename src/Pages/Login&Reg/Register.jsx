@@ -11,7 +11,7 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const Register = () => {
     const axiosSecure = useAxiosSecure()
-    const { createUser, user } = useAuth()
+    const { createUser, user, updateUser } = useAuth()
 
     const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = data => {
@@ -32,6 +32,7 @@ const Register = () => {
                 .then(res=>{
                     console.log(res.data);
                     console.log('saved user in mongodb');
+                    updateUser(name, photo)
                 })
             console.log(res);
             

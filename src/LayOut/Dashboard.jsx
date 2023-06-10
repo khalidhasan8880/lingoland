@@ -64,18 +64,18 @@ const Dashboard = () => {
         <>
                 <li>
                     <NavLink
-                        to='/dashboard/my_enrolled_class'
-                        className={({ isActive }) => (isActive ? 'text-pr flex items-center gap-2 py-2 rounded-md text-1xl font-semibold' : 'text-center flex items-center gap-2 py-2 rounded-md text-1xl font-semibold')}
-                    >
-                        <ImEnter size={22}></ImEnter> <span>Enrolled Classes</span>
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink
                         to='/dashboard/my_selected_class'
                         className={({ isActive }) => (isActive ? 'text-pr flex items-center gap-2 py-2 rounded-md text-1xl font-semibold' : 'text-center flex items-center gap-2 py-2 rounded-md text-1xl font-semibold')}
                     >
                         <FaBookReader size={22}></FaBookReader><span> My Selected Class</span>
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink
+                        to='/dashboard/my_enrolled_class'
+                        className={({ isActive }) => (isActive ? 'text-pr flex items-center gap-2 py-2 rounded-md text-1xl font-semibold' : 'text-center flex items-center gap-2 py-2 rounded-md text-1xl font-semibold')}
+                    >
+                        <ImEnter size={22}></ImEnter> <span>Enrolled Classes</span>
                     </NavLink>
                 </li>
             </>
@@ -116,7 +116,7 @@ const Dashboard = () => {
 
 
             {
-                openDAshboardNav && <div className=" md:hidden backdrop-blur-xl  fixed left-0 w-4/6 ">
+                openDAshboardNav && <div className=" md:hidden backdrop-blur-xl rounded-lg fixed left-0 w-4/6 ">
 
                     <ul className="md:w-96 py-4 px-1 ">
                         {drawerLinks}
@@ -126,7 +126,7 @@ const Dashboard = () => {
 
             <div className="flex">
 
-                <ul className="md:w-56  h-96 p-3 bg-pr hidden md:block ">
+                <ul className="md:w-60 rounded-lg h-96 p-3 bg-pr hidden md:block ">
                     {
                         drawerLinks
                     }

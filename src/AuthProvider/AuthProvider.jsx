@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
+import { GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import app from "../Firebase/firebase.config";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 // provider
@@ -33,15 +33,25 @@ const AuthProvider = ({ children }) => {
         return signInWithPopup(auth, googleProvider)
     }
 
+    const updateUser = (name,photo) => {
+        return updateProfile(auth.currentUser, {
+            displayName: name, photoURL: photo,
+        }).then(() => {
+            console.log('profile update success');
+        }).catch(() => {
+            console.log('profile update failed');
+        })
+    }
+
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             if (currentUser) {
                 setUser(currentUser)
                 setLoading(false)
-                axiosSecure.post('/jwt',{email:currentUser?.email})
-                .then((res)=>{
-                    localStorage.setItem('access-token', res?.data?.token)
-                })
+                axiosSecure.post('/jwt', { email: currentUser?.email })
+                    .then((res) => {
+                        localStorage.setItem('access-token', res?.data?.token)
+                    })
 
             } else {
                 localStorage.removeItem('access-token')
@@ -61,7 +71,8 @@ const AuthProvider = ({ children }) => {
         logIn,
         continueWithGoogle,
         createUser,
-        logOut
+        logOut, 
+        updateUser
     }
     return (
         <AuthContext.Provider value={authInformation}>

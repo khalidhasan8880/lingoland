@@ -10,6 +10,7 @@ const AddClass = () => {
     const { user } = useAuth()
     const [breakMultiClick, setBreakMultiClick] = useState(false)
     const { register, handleSubmit, reset } = useForm();
+
     const onSubmit = data => {
         console.log(data);
         setBreakMultiClick(true)
@@ -65,11 +66,16 @@ const AddClass = () => {
                 </div>
             </div>
             <div className="my-7 ">
+                <label className="ms-5">Add A Class Sort Title*</label>
+                <input placeholder="Your Class Title" className="w-full px-4 py-3 border-2 my-1 rounded-full " {...register("title", { required: true })} />
+            </div>
+            <div className="my-7 ">
                 <label className="ms-5">Photo Url*</label>
                 <input placeholder="Paste Your Photo_url" className="w-full px-4 py-3 border-2 my-1 rounded-full " {...register("photo", { required: true })} />
             </div>
             <input hidden type="text" defaultValue='pending' {...register("status")} />
             <input hidden type="text" defaultValue={user?.displayName} {...register("instructorName")} />
+            <input hidden type="text" defaultValue={user?.photoURL} {...register("instructorPhoto")} />
 
             {/* submit btn */}
             <button className="bg-gradient-to-r from-[#3de09b] to-[#00c4ee] text-xl active:px-5 text-white sm:text-1xl text-center px-6 py-2 rounded-full" disabled={breakMultiClick}>
