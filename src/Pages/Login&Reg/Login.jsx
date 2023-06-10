@@ -6,7 +6,7 @@ import { AiOutlineEyeInvisible } from "react-icons/ai"
 import { useAuth } from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 const Login = () => {
-    const [errorMessage, setErrorMessage] = useState(null)
+    const [errorMessage] = useState(null)
     const {logIn}=useAuth()
     const [showPass, setShowPass] = useState(false)
     const { register, handleSubmit } = useForm();

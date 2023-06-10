@@ -68,7 +68,8 @@ const AddClass = () => {
                 <label className="ms-5">Photo Url*</label>
                 <input placeholder="Paste Your Photo_url" className="w-full px-4 py-3 border-2 my-1 rounded-full " {...register("photo", { required: true })} />
             </div>
-            <input hidden type="text" defaultValue='pending' {...register("status", { required: true })} />
+            <input hidden type="text" defaultValue='pending' {...register("status")} />
+            <input hidden type="text" defaultValue={user?.displayName} {...register("instructorName")} />
 
             {/* submit btn */}
             <button className="bg-gradient-to-r from-[#3de09b] to-[#00c4ee] text-xl active:px-5 text-white sm:text-1xl text-center px-6 py-2 rounded-full" disabled={breakMultiClick}>

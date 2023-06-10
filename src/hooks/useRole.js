@@ -15,6 +15,7 @@ export const useRole = () => {
             return axiosSecure.get(`/users/role/${user?.email}`)
                 .then(res => res.data)
         },
+        // for repeatedly request
         refetchOnMount: false, 
         refetchOnReconnect: false,
         refetchOnWindowFocus: false

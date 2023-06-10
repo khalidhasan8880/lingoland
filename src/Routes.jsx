@@ -12,12 +12,15 @@ import AdminRoute from "./PrivetRoutes/AdminRoute";
 import InstructorRoute from "./PrivetRoutes/InstructorRoute";
 import AddClass from "./Pages/DashBoardPages/InstructorPages/AddClass";
 import MyClasses from "./Pages/DashBoardPages/InstructorPages/MyClasses";
+import ErrorPage from "./Pages/ErrorPage";
+import ManageClasses from "./Pages/DashBoardPages/AdminPages/ManageClasses";
 // import AdminRoute from "./PrivetRoutes/AdminRoute";
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <LayOut></LayOut>,
+        errorElement:<ErrorPage></ErrorPage>,
         children:[
             {
                 path:'/',
@@ -40,6 +43,10 @@ const router = createBrowserRouter([
                     {
                         path:'manage_user',
                         element:<AdminRoute><ManageUser></ManageUser></AdminRoute>
+                    },
+                    {
+                        path:'manage_classes',
+                        element:<AdminRoute><ManageClasses></ManageClasses></AdminRoute>
                     },
                     // instructor routes
                     {

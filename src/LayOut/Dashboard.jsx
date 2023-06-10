@@ -1,6 +1,6 @@
 
 import { useAuth } from "../hooks/useAuth";
-import { FaBars, FaBookReader, FaUser, FaUsers } from "react-icons/fa";
+import { FaBars, FaBookReader, FaEdit, FaUser, FaUsers } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import { AiOutlineClose, AiOutlineVideoCameraAdd } from "react-icons/ai";
@@ -25,16 +25,16 @@ const Dashboard = () => {
             <>
                 <li>
                     <NavLink
-                        to='/dashboard/classes'
-                        className={({ isActive }) => (isActive ? 'text-pr text-center flex items-center gap-2 justify-center py-2 rounded-md text-1xl font-semibold' : 'text-center flex items-center gap-2 justify-center py-2 rounded-md text-1xl font-semibold')}
+                        to='/dashboard/manage_classes'
+                        className={({ isActive }) => (isActive ? 'text-pr flex items-center gap-2  py-2 rounded-md text-1xl font-semibold' : 'flex items-center gap-2  py-2 rounded-md text-1xl font-semibold')}
                     >
-                        <FaUsers size={22}></FaUsers> <span>Manage Classes</span>
+                        <FaEdit size={22}></FaEdit> <span>Manage Classes</span>
                     </NavLink>
                 </li>
                 <li>
                     <NavLink
                         to='/dashboard/manage_user'
-                        className={({ isActive }) => (isActive ? 'text-pr text-center flex items-center gap-2 justify-center py-2 rounded-md text-1xl font-semibold' : 'text-center flex items-center gap-2 justify-center py-2 rounded-md text-1xl font-semibold')}
+                        className={({ isActive }) => (isActive ? 'text-pr flex items-center gap-2  py-2 rounded-md text-1xl font-semibold' : 'flex items-center gap-2  py-2 rounded-md text-1xl font-semibold')}
                     >
                         <FaUsers size={22}></FaUsers> <span>Manage Users</span>
                     </NavLink>
@@ -45,7 +45,7 @@ const Dashboard = () => {
                 <li>
                     <NavLink
                         to='/dashboard/add_class'
-                        className={({ isActive }) => (isActive ? 'text-pr text-center flex items-center gap-2 justify-center py-2 rounded-md text-1xl font-semibold' : 'text-center flex items-center gap-2 justify-center py-2 rounded-md text-1xl font-semibold')}
+                        className={({ isActive }) => (isActive ? 'text-pr flex items-center gap-2 py-2 rounded-md text-1xl font-semibold' : 'text-center flex items-center gap-2 py-2 rounded-md text-1xl font-semibold')}
                     >
                         <AiOutlineVideoCameraAdd size={22}></AiOutlineVideoCameraAdd><span>Add Class</span>
                     </NavLink>
@@ -53,7 +53,7 @@ const Dashboard = () => {
                 <li>
                     <NavLink
                         to='/dashboard/my_classes'
-                        className={({ isActive }) => (isActive ? 'text-pr text-center flex items-center gap-2 justify-center py-2 rounded-md text-1xl font-semibold' : 'text-center flex items-center gap-2 justify-center py-2 rounded-md text-1xl font-semibold')}
+                        className={({ isActive }) => (isActive ? 'text-pr flex items-center gap-2 py-2 rounded-md text-1xl font-semibold' : 'text-center flex items-center gap-2 py-2 rounded-md text-1xl font-semibold')}
                     >
                         <FaBookReader size={22}></FaBookReader><span>My Classes</span>
                     </NavLink>
@@ -94,7 +94,7 @@ const Dashboard = () => {
 
 
             {
-                openDAshboardNav && <div className="flex  flex-col min-w-h-96 md:hidden backdrop-blur-xl  fixed left-0 w-4/6 ">
+                openDAshboardNav && <div className=" md:hidden backdrop-blur-xl  fixed left-0 w-4/6 ">
 
                     <ul className="md:w-96 py-4 px-1 ">
                         {drawerLinks}
@@ -104,13 +104,13 @@ const Dashboard = () => {
 
             <div className="flex">
 
-                <ul className="md:w-96 h-96 py-2 px-1 hidden md:block ">
+                <ul className="md:w-56  h-96 p-3 bg-pr hidden md:block ">
                     {
                         drawerLinks
                     }
                 </ul>
 
-                <div className="w-full p-4">
+                <div className="w-full ps-4">
                     <Outlet></Outlet>
                 </div>
             </div>

@@ -7,6 +7,7 @@ import { Dialog } from "@headlessui/react";
 import { useQuery } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
 import { useForm } from "react-hook-form";
+import { Helmet } from "react-helmet-async";
 
 const MyClasses = () => {
     // hooks 
@@ -23,7 +24,7 @@ const MyClasses = () => {
 
     // react hook from handler
     const onSubmit = data => {
-       console.log(data);
+        console.log(data);
         axiosSecure.post(`/classes/update/${data._id}`, data)
             .then(res => {
                 console.log(res.data);
@@ -79,16 +80,19 @@ const MyClasses = () => {
         setIsOpen(true)
     }
 
-    
+
     return (
         <>
             {classes.length > 0 ?
                 <div>
+                    <Helmet>
+                        <title>LINGOLAND | My Classes </title>
+                    </Helmet>
                     <table className="w-full">
                         <thead className=" bg-pr">
                             <tr>
                                 <th className="p-2 ">
-                                    <p className="text-left">Instructor Name</p>
+                                    <p className="text-left">Class Name</p>
                                 </th>
                                 <th className="p-2 hidden sm:table-cell">
                                     <p className="text-left">Enrolled Students</p>
@@ -197,7 +201,7 @@ const MyClasses = () => {
                             <div className="flex min-h-full items-center justify-center p-4">
 
                                 {/* The actual dialog panel  */}
-                                <Dialog.Panel className="mx-auto p-6 rounded bg-white">
+                                <Dialog.Panel className="mx-auto">
                                     {
                                         actionModal === 'feedback' ?
                                             <div>
@@ -250,9 +254,9 @@ const MyClasses = () => {
                                                         <label className="ms-5">Photo Url*</label>
                                                         <input defaultValue={modalContent?.photo} placeholder="Paste Your Photo_url" className="w-full px-4 py-3 border-2 my-1 rounded-full " {...register("photo", { required: true })} />
                                                     </div>
-                                                    <input hidden type="text" defaultValue='pending' {...register("status", { required: true })} />
-                                                    <input hidden type="text" defaultValue={modalContent?._id} {...register("_id", { required: true })} />
-
+                                                    <input hidden type="text" defaultValue='pending' {...register("status")} />
+                                                    <input hidden type="text" defaultValue={modalContent?._id} {...register("_id")} />
+                                                    <input hidden type="text" defaultValue={user?.displayName} {...register("instructorName")} />
                                                     {/* submit btn */}
                                                     <button type="submit"
                                                         className="bg-gradient-to-r from-[#3de09b] to-[#00c4ee] text-xl active:px-5 text-white sm:text-1xl text-center px-6 py-2 rounded-full" >

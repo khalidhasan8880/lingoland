@@ -1,16 +1,14 @@
 import { Link, NavLink } from "react-router-dom";
 import logo from '../assets/icons/logo.png'
 import { FaBars, FaSignInAlt, FaSignOutAlt, FaUser } from 'react-icons/fa'
-import { AiOutlineClose, AiOutlineLogout } from 'react-icons/ai'
+import { AiOutlineClose } from 'react-icons/ai'
 import { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
-import Button from "../components/Button/Button";
 
 
 const Navbar = () => {
     const [open, setOpen] = useState(false)
     const { user, logOut } = useAuth()
-
     // 
     const logOutHandler = () => {
         logOut()
@@ -48,10 +46,10 @@ const Navbar = () => {
                 user?.uid ?
                 <Link to='/my_profile'>
                     {
-                        user?.picture_url ?
+                        user?.photoURL ?
                             <img
                                 className="rounded-full w-10 h-10"
-                                src={user?.picture_url}
+                                src={user?.photoURL}
                                 width="40"
                                 height="40"
                             />
