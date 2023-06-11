@@ -36,6 +36,7 @@ const MyClasses = () => {
     // react hook from handler
     const onSubmit = data => {
         console.log(data);
+
         axiosSecure.post(`/classes/update/${data._id}`, data)
             .then(res => {
                 console.log(res.data);
@@ -246,12 +247,16 @@ const MyClasses = () => {
                                                     <div className="grid sm:grid-cols-2 gap-4 ">
                                                         <div className="my-7 ">
                                                             <label className="ms-5">Price</label>
-                                                            <input defaultValue={modalContent?.price} type="number" placeholder="Price" className="w-full px-4 py-3 border-2 my-1 rounded-full " {...register("price", { required: true })} />
+                                                            <input defaultValue={modalContent?.price} type="number" placeholder="Price" className="w-full px-4 py-3 border-2 my-1 rounded-full " {...register("price", {
+                                                                valueAsNumber: true,
+                                                            }, { required: true })} />
                                                         </div>
 
                                                         <div className="my-7 ">
                                                             <label className="ms-5">Available seats</label>
-                                                            <input defaultValue={modalContent?.seats} type="number" placeholder="Available Seats" className="w-full px-4 py-3 border-2 my-1 rounded-full " {...register("seats", { required: true })} />
+                                                            <input defaultValue={modalContent?.seats} type="number" placeholder="Available Seats" className="w-full px-4 py-3 border-2 my-1 rounded-full " {...register("seats", {
+                                                                valueAsNumber: true,
+                                                            }, { required: true })} />
                                                         </div>
                                                     </div>
 
@@ -265,7 +270,9 @@ const MyClasses = () => {
 
                                                         <div className="my-7 ">
                                                             <label className="ms-5">Phone Number</label>
-                                                            <input defaultValue={modalContent?.phone} placeholder="Type Your Phone Number" className="w-full px-4 py-3 border-2 my-1 rounded-full " {...register("phone")} />
+                                                            <input defaultValue={modalContent?.phone} placeholder="Type Your Phone Number" className="w-full px-4 py-3 border-2 my-1 rounded-full " {...register("phone", {
+                                                                valueAsNumber: true,
+                                                            })} />
                                                         </div>
                                                     </div>
                                                     <div className="my-7 ">

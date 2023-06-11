@@ -14,16 +14,16 @@ const AddClass = () => {
     const onSubmit = data => {
         console.log(data);
         setBreakMultiClick(true)
-        
+
         axiosSecure.post(`/add-class/${user?.email}`, data)
-        .then((res)=>{
-            console.log(res.data);
-            setBreakMultiClick(false)
-            reset()
-        })
-        .catch(()=>{
-            setBreakMultiClick(false)
-        })
+            .then((res) => {
+                console.log(res.data);
+                setBreakMultiClick(false)
+                reset()
+            })
+            .catch(() => {
+                setBreakMultiClick(false)
+            })
     };
 
     return (
@@ -43,12 +43,16 @@ const AddClass = () => {
             <div className="grid sm:grid-cols-2 gap-4 ">
                 <div className="my-7 ">
                     <label className="ms-5">Price</label>
-                    <input type="number" placeholder="Price" className="w-full px-4 py-3 border-2 my-1 rounded-full " {...register("price", { required: true })} />
+                    <input type="number" placeholder="Price" className="w-full px-4 py-3 border-2 my-1 rounded-full " {...register("price", {
+                        valueAsNumber: true,
+                    }, { required: true })} />
                 </div>
 
                 <div className="my-7 ">
                     <label className="ms-5">Available seats</label>
-                    <input type="number" placeholder="Available Seats" className="w-full px-4 py-3 border-2 my-1 rounded-full " {...register("seats", { required: true })} />
+                    <input type="number" placeholder="Available Seats" className="w-full px-4 py-3 border-2 my-1 rounded-full " {...register("seats", {
+                        valueAsNumber: true,
+                    }, { required: true })} />
                 </div>
             </div>
 
@@ -62,7 +66,9 @@ const AddClass = () => {
 
                 <div className="my-7 ">
                     <label className="ms-5">Phone Number</label>
-                    <input placeholder="Type Your Phone Number" className="w-full px-4 py-3 border-2 my-1 rounded-full " {...register("phone")} />
+                    <input placeholder="Type Your Phone Number" className="w-full px-4 py-3 border-2 my-1 rounded-full " {...register("phone", {
+                        valueAsNumber: true,
+                    })} />
                 </div>
             </div>
             <div className="my-7 ">
