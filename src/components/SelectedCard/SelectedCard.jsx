@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 
 const SelectedCard = ({ cart, paymentForSingleItemHandler }) => {
 
@@ -6,7 +5,8 @@ const SelectedCard = ({ cart, paymentForSingleItemHandler }) => {
 
     }
     return (
-        <div className="flex justify-between gap-4  rounded-xl shadow-xl h-72 pe-4">
+        <div className="flex justify-between gap-4  rounded-xl shadow-xl h-72 pe-4" data-aos="fade-up"
+        data-aos-duration="1000">
             <img className="w-72 rounded-s-xl" src={cart.photo} alt="" />
             <div className="flex flex-col justify-around">
                 <p className="text-[#32f9a6] ">

@@ -1,11 +1,11 @@
 import { Helmet } from "react-helmet-async";
 import Banner from "../Banner/Banner";
 
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import { useAuth } from "../../../hooks/useAuth";
-import { useQuery } from "@tanstack/react-query";
-import { useRole } from "../../../hooks/useRole";
-import Loading from "../../../components/Loading/Loading";
+// import useAxiosSecure from "../../../hooks/useAxiosSecure";
+// import { useAuth } from "../../../hooks/useAuth";
+// import { useQuery } from "@tanstack/react-query";
+// import { useRole } from "../../../hooks/useRole";
+// import Loading from "../../../components/Loading/Loading";
 import PopularClasses from "../PopularClasses/PopularClasses";
 import Carousel from "../Carousel/Carousel";
 

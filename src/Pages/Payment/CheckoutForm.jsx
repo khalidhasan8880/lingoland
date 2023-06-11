@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useAuth } from "../../hooks/useAuth";
 import { Toaster, toast } from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
 
 const CheckoutForm = ({ totalPrice, carts }) => {
     const stripe = useStripe();
@@ -13,7 +12,6 @@ const CheckoutForm = ({ totalPrice, carts }) => {
     const [clientSecret, setClientSecret] = useState('')
     const [processing, setProcessing] = useState(false)
     const { user } = useAuth()
-    const navigate = useNavigate()
    
     useEffect(() => {
         axiosSecure.post('/create-payment-intent', { totalPrice, name: user?.displayName, email: user?.email })

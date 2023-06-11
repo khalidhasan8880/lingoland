@@ -68,8 +68,8 @@ const MySelectedClasses = () => {
                 <title>LINGOLAND | My Selected Classes </title>
             </Helmet>
                 <h1 className="text-2xl">Total selected Cart: {carts?.length}</h1>
-            <SectionTitle>My Selected Classes</SectionTitle>
             <div className="flex flex-wrap justify-between">
+            <SectionTitle>My Selected Classes</SectionTitle>
                 {
                     carts.length !== 0 && <Link to='/payment' state={{ carts }} className="bg-gradient-to-r from-[#3de09b] to-[#00c4ee] text-white mt-11 text-center px-6 py-2 rounded-full">Pay For All Classes</Link>
                 }
