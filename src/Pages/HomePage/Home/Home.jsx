@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useRole } from "../../../hooks/useRole";
 import Loading from "../../../components/Loading/Loading";
 import PopularClasses from "../PopularClasses/PopularClasses";
+import Carousel from "../Carousel/Carousel";
 
 const Home = () => {
     
@@ -24,7 +25,7 @@ const Home = () => {
             <Helmet>
                 <title>LINGOLAND | Home </title>
             </Helmet>
-
+            <Carousel></Carousel>
             <Banner></Banner>
 
 

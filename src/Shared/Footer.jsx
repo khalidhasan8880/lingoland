@@ -16,9 +16,9 @@ const Footer = () => {
             window.removeEventListener('resize', handleResize);
         };
     }, []);
-console.log(screenHeight);
+    console.log(screenHeight);
     return (
-        <footer >
+        <footer className="w-full">
             <div className="container mx-auto py-8 px-4">
                 <div>
 

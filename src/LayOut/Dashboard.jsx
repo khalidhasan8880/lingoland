@@ -72,7 +72,7 @@ const Dashboard = () => {
                 </li>
                 <li>
                     <NavLink
-                        to='/dashboard/my_enrolled_class'
+                        to='/dashboard/enrolled_classes'
                         className={({ isActive }) => (isActive ? 'text-pr flex items-center gap-2 py-2 rounded-md text-1xl font-semibold' : 'text-center flex items-center gap-2 py-2 rounded-md text-1xl font-semibold')}
                     >
                         <ImEnter size={22}></ImEnter> <span>Enrolled Classes</span>

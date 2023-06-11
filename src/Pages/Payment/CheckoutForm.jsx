@@ -3,8 +3,9 @@ import { useEffect, useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useAuth } from "../../hooks/useAuth";
 import { Toaster, toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
-const CheckoutForm = ({ totalPrice }) => {
+const CheckoutForm = ({ totalPrice, carts }) => {
     const stripe = useStripe();
     const elements = useElements();
     const [showError, setShowError] = useState('')
@@ -12,6 +13,7 @@ const CheckoutForm = ({ totalPrice }) => {
     const [clientSecret, setClientSecret] = useState('')
     const [processing, setProcessing] = useState(false)
     const { user } = useAuth()
+    const navigate = useNavigate()
    
     useEffect(() => {
         axiosSecure.post('/create-payment-intent', { totalPrice, name: user?.displayName, email: user?.email })
@@ -68,12 +70,22 @@ const CheckoutForm = ({ totalPrice }) => {
         if (paymentIntent?.status === 'succeeded') {
             setProcessing(false)
             toast.success('Payment Succeeded')
-            axiosSecure.post('/payment', {
+            axiosSecure.post('/payments', {
                 transactionId: paymentIntent?.id,
                 name: user?.displayName,
                 email: user?.email,
                 totalPrice,
-
+                quantity:carts.length,
+                purchasedClassesId: carts.map(cart=> cart._id),
+                purchasedClassesName: carts.map(cart=> cart.className),
+            })
+            .then(res=>{
+                console.log("payment success ", res.data);
+                axiosSecure.delete(`/delete/carts/${user?.email}`)
+                .then(res=>{
+                    console.log("deleted res",res.data);
+                    // TODO: REDIRECT PAYMENT HISTORY WITH NAVIGATE
+                })
             })
         }
 
@@ -81,6 +93,12 @@ const CheckoutForm = ({ totalPrice }) => {
 
 
     };
+
+
+
+
+
+    console.log(carts);
     return (
         <form onSubmit={handleSubmit} className="shadow-xl p-5 sm:p-10 rounded-xl">
             <Toaster></Toaster>
