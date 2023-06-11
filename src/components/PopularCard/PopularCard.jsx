@@ -4,20 +4,21 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const PopularCard = ({ cls }) => {
     const { user } = useAuth()
-    const axiosSecure  = useAxiosSecure()
-    const addCartHandler=(id)=>{
-        axiosSecure.post('/carts', {email:user?.email ,classId:id})
-        .then(res=>{
-            console.log(res.data);
-            if (res.data.insertedId) {
-                toast.success('successfully added')
-            }
-        })
+    const axiosSecure = useAxiosSecure()
+    const addCartHandler = (id) => {
+        console.log(id);
+        axiosSecure.post('/carts', { email: user?.email, classId: id })
+            .then(res => {
+                console.log(res.data);
+                if (res.data.insertedId) {
+                    toast.success('successfully added')
+                }
+            })
     }
     console.log(user);
     return (
-        <div className="p-4 h-[500px] bg-white rounded-lg shadow-xl sm:w-96 w-80 relative "  data-aos="fade-up"
-        data-aos-duration="1000">
+        <div className={`p-4 h-[500px] bg-white rounded-lg  sm:w-96 w-80 relative ${cls?.seats ? 'shadow-xl':'shadow-none'}`} data-aos="fade-up"
+            data-aos-duration="1000">
             <img className="rounded-lg w-full" src={cls?.photo} alt="" />
             <div className="p-1 mt-3 ">
                 <div className="flex justify-between items-center">
@@ -25,15 +26,31 @@ const PopularCard = ({ cls }) => {
                         <p className="text-[#32f9a6] ">{cls?.className}</p>
                     </div>
                     <div>
-                        <button
-                            onClick={()=>addCartHandler(cls?._id)}
-                            className="bg-gradient-to-r from-[#3de09b] to-[#00c4ee] text-white text-center px-3 py-2 rounded-full">Add to cart
-                        </button>
+                        {
+                            cls?.seats > 0
+                                ?
+                                <button
+                                    disabled={!cls?.seats}
+                                    onClick={() => addCartHandler(cls?._id)}
+                                    className="bg-gradient-to-r from-[#3de09b] to-[#00c4ee] text-white text-center px-3 py-2 cursor-pointer rounded-full">Add to cart
+                                </button>
+                                :
+
+                                <button
+                                    disabled={!cls?.seats}
+                                    onClick={() => addCartHandler(cls?._id)}
+                                    className="bg-gradient-to-r from-[#e4d0bf] to-[#e4a4a4] text-white text-center px-3 py-2 rounded-full active:top-0">Add to cart
+                                </button>
+                        }
+
                     </div>
                 </div>
                 <div className="px-2 mt-2">
                     <h3 className="text-xl my-5">
-                        {cls?.title && cls?.title?.slice(0, 100)}
+                        {cls?.title && cls?.title?.slice(0, 50)}
+                    </h3>
+                    <h3 className=" my-1">
+                        Available Seats: {cls?.seats} 
                     </h3>
                     <div className="flex justify-between items-center absolute bottom-5 w-64 sm:w-80">
                         <div className="flex gap-x-3 items-center">
