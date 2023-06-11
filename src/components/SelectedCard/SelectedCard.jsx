@@ -1,5 +1,6 @@
+import { Link } from "react-router-dom";
 
-const SelectedCard = ({ cart }) => {
+const SelectedCard = ({ cart, paymentForSingleItemHandler }) => {
 
     const deleteCartHandler = () => {
 
@@ -21,10 +22,16 @@ const SelectedCard = ({ cart }) => {
                 <p>Instructor Email: {cart.email}</p>
                 <div className="flex justify-between items-center">
                     <h3>Price: ${cart.price}</h3>
-                    <button
-                        onClick={() => deleteCartHandler(cart?._id)}
-                        className="bg-red-500 ms-auto text-white text-center px-3 py-2 rounded-full">Delete
-                    </button>
+                    <div>
+                        <button
+                            onClick={()=> paymentForSingleItemHandler(cart?._id , cart?.price)}
+                            className="bg-gradient-to-r from-[#3de09b] to-[#00c4ee] text-white text-center px-6 py-2 cursor-pointer rounded-full mr-2"> Pay
+                        </button>
+                        <button
+                            onClick={() => deleteCartHandler(cart?._id)}
+                            className="bg-red-500 ms-auto text-white text-center px-3 py-2 rounded-full">Delete
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

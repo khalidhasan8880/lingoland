@@ -7,7 +7,7 @@ const PopularCard = ({ cls }) => {
     const axiosSecure = useAxiosSecure()
     const addCartHandler = (id) => {
         console.log(id);
-        axiosSecure.post('/carts', { email: user?.email, classId: id })
+        axiosSecure.put('/carts', { email: user?.email, classId: id })
             .then(res => {
                 console.log(res.data);
                 if (res.data.insertedId) {

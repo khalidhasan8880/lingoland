@@ -7,8 +7,8 @@ import toast, { Toaster } from 'react-hot-toast';
 // import { useRole } from "../../../hooks/useRole";
 
 const ManageUser = () => {
+    // hooks
     const axiosSecure = useAxiosSecure()
-
     let [modalData, setModalData] = useState({})
     let [users, setUsers] = useState([])
     let [isOpen, setIsOpen] = useState(false)
