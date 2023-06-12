@@ -46,7 +46,7 @@ const Navbar = () => {
             </NavLink>
         </li>
 
-        <li >
+        <li title="Dart theme only for Home page">
             <Switch.Group>
                 <div className="flex items-center">
                     <Switch.Label className="mr-4">{enabled ? 'Dark' : 'Light'}</Switch.Label>
@@ -92,7 +92,7 @@ const Navbar = () => {
 
     </>
 
-// 
+// TODO: USE  LocalStorage FOR STORED DARK MOOD LIGHT MODE DATA & MAKE MORE EASY WITH TAILWIND DARK: SYSTEM
 
 
 

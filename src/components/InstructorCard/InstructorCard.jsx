@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 
 const InstructorCard = ({instructor}) => {
+    const {enabled} = useAuth()
+    // p-4 h-[500px] bg-white rounded-lg shadow-xl sm:w-96 w-80 relative 
     return (
-        <div className="p-4 h-[500px] bg-white rounded-lg shadow-xl sm:w-96 w-80 relative "  data-aos="fade-up"
+        <div className={`${enabled ? 'bg-[#082621]' : 'bg-white'} p-4 h-[500px]  rounded-lg shadow-xl sm:w-96 w-80 relative `}  data-aos="fade-up"
         data-aos-duration="1000">
             <img className="rounded-lg w-full h-72" src={instructor?.photo} alt="" />
             <div className="p-1 mt-3 ">

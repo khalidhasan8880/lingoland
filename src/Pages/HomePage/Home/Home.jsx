@@ -8,6 +8,7 @@ import Banner from "../Banner/Banner";
 // import Loading from "../../../components/Loading/Loading";
 import PopularClasses from "../PopularClasses/PopularClasses";
 import Carousel from "../Carousel/Carousel";
+import Instructor from "../../InstructorPage/Instructor";
 
 const Home = () => {
     
@@ -31,7 +32,7 @@ const Home = () => {
 
             {/* ---------------------------------------------------- */}
             <PopularClasses></PopularClasses>
-        
+            <Instructor></Instructor>
         </>
     );
 };

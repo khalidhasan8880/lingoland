@@ -15,7 +15,7 @@ const PopularClasses = () => {
         return <Loading></Loading>
     }
     return (
-        <section>
+        <section className="h-screen">
             <SectionTitle>Our Popular Classes</SectionTitle>
             <div className="grid gap-5 sm:grid-cols-3 font-semibold place-content-center ">
                 {
