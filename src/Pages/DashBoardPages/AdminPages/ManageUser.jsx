@@ -1,62 +1,79 @@
 import { FaEye, FaUser, FaUserCog } from "react-icons/fa";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { useQuery } from "@tanstack/react-query";
 import toast, { Toaster } from 'react-hot-toast';
-import Loading from "../../../components/Loading/Loading";
 import { useAuth } from "../../../hooks/useAuth";
+import Loading from "../../../components/Loading/Loading";
 // import { useRole } from "../../../hooks/useRole";
 
 const ManageUser = () => {
     // hooks
     const axiosSecure = useAxiosSecure()
-    const {user} =  useAuth()
+    const { user, loading } = useAuth()
     let [modalData, setModalData] = useState({})
- 
+
     let [isOpen, setIsOpen] = useState(false)
-    let [actionModal, setActionModal] = useState('viewUser')
-    let [confirm, setConfirm] = useState(false)
-    let [updateState, setUpdateState] = useState(null)
-    let [userId, setUserId] = useState(null)
 
-
-    if (confirm) {
-        closeModal()
-    }
 
     function closeModal() {
         setIsOpen(false)
-        setConfirm(false)
-        setUserId(null)
-        setUpdateState(null)
     }
 
     function openModal() {
         setIsOpen(true)
     }
 
+// modal handle
     const modalDataHandler = (user) => {
-        setActionModal('viewUser')
         openModal()
         setModalData(user)
     }
 
-
-    useEffect(() => {
-        
-    }, [confirm])
-
-
-const { data:users=[] , isLoading, refetch} = useQuery({
-    queryKey:['allUsers', user?.email],
-    enabled:!!localStorage.getItem('access-token'),
-    queryFn:async()=> await axiosSecure.get('/users').then(res => res.data)
-})
+// get all users
+    const { data: users = [], isLoading, refetch } = useQuery({
+        queryKey: ['allUsers', user?.email] ,
+        enabled: !loading && !!user?.email ,
+        queryFn: async () => await axiosSecure.get('/users').then(res => res.data)
+    })
 
 
-    if (updateState === 'delete' && confirm && !!localStorage.getItem('access-token')) {
-        axiosSecure.delete(`/users/${updateState}/${userId}`)
+    const updateUserRole = (id, updateRole) => {
+        axiosSecure.post(`/users/${updateRole}/${id}`)
+            .then(res => {
+                console.log(res);
+                closeModal()
+                refetch()
+                if (res.data.modifiedCount) {
+                    toast.success(`Successful`)
+                }
+                return res.data
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+
+
+
+
+
+
+
+
+
+
+    // const updateUserHandler = (id, state) => {
+    //     setUserId(id)
+    //     setUpdateState(state)
+    //     console.log(state);
+    //     setActionModal('update')
+    //     openModal()
+    // }
+
+    const userDeleteHandler = (id, state) => {
+        axiosSecure.delete(`/users/${state}/${id}`)
             .then(res => {
                 console.log(res.data);
                 refetch()
@@ -68,56 +85,6 @@ const { data:users=[] , isLoading, refetch} = useQuery({
                 console.log(err);
                 toast.error('request unsuccessful')
             })
-    }
-
-    if (updateState === 'instructor' && confirm && !!localStorage.getItem('access-token')) {
-        axiosSecure.post(`/users/${updateState}/${userId}`)
-            .then(res => {
-                console.log(res);
-                closeModal()
-                refetch()
-                if (res.data.modifiedCount) {
-                    toast.success(`Successful`)
-                }
-                return res.data
-            })
-            .catch(err => {
-                console.log(err);
-            })
-    }
-
-    if (updateState === 'admin' && confirm && !!localStorage.getItem('access-token')) {
-        axiosSecure.post(`/users/${updateState}/${userId}`)
-            .then(res => {
-                console.log(res);
-                closeModal()
-                refetch()
-                if (res.data.modifiedCount) {
-                    toast.success(`Successful`)
-                }
-                return res.data
-            })
-            .catch(err => {
-                console.log(err);
-            })
-    }
-
-
-
-    const updateUserHandler = (id, state) => {
-        setUserId(id)
-        setUpdateState(state)
-        console.log(state);
-        setActionModal('update')
-        openModal()
-    }
-
-    const userDeleteHandler = (id, state) => {
-        console.log(id, state);
-        setUserId(id)
-        setUpdateState(state)
-        setActionModal('update')
-        openModal()
     }
 
     if (isLoading) {
@@ -241,8 +208,7 @@ modal modal modal content
                                 leaveFrom="opacity-100 scale-100"
                                 leaveTo="opacity-0 scale-95"
                             >
-                                {
-                                    actionModal === 'viewUser' ? <Dialog.Panel className="py-11 px-4 transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all">
+                               <Dialog.Panel className="py-11 px-4 transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all">
 
                                         <div className="my-5 flex flex-col justify-center gap-x-4 items-center">
                                             {
@@ -254,7 +220,7 @@ modal modal modal content
                                                     </div>
                                             }
                                             <div className="flex justify-center items-start text-center  flex-col">
-                                                <h1 className="sm:text-xl ">Welcome Back {modalData?.displayName}</h1>
+                                                <h1 className="sm:text-xl ">{modalData?.name}</h1>
                                                 <h1 className="sm:text-1xl text-sm">{modalData?.email}</h1>
                                                 {/* TODO: SHOW DYNAMIC ROLE */}
                                                 <span className="text-sm bg-[#3de09ce3] rounded-xl px-2  text-center text-white">admin</span>
@@ -267,12 +233,13 @@ modal modal modal content
                                             <p> Address:{modalData?.address}</p>
                                             <p>Gender:{modalData?.gender}</p>
                                         </div>
+                                        {/* ----------------------------------- */}
                                         <div className="mt-3 gap-x-2 flex justify-between">
                                             <button
-                                                onClick={() => updateUserHandler(modalData?._id, 'admin')} className="bg-[#3de09ce3] rounded-full text-white py-1 px-2">Make Admin
+                                                onClick={() => updateUserRole(modalData?._id, 'admin')} className="bg-[#3de09ce3] rounded-full text-white py-1 px-2">Make Admin
                                             </button>
                                             <button
-                                                onClick={() => updateUserHandler(modalData?._id, 'instructor')} className="bg-[#00c4ee] rounded-full text-white py-1 px-2">Make Instructor
+                                                onClick={() => updateUserRole(modalData?._id, 'instructor')} className="bg-[#00c4ee] rounded-full text-white py-1 px-2">Make Instructor
                                             </button>
                                             <button
                                                 onClick={() => userDeleteHandler(modalData?._id, 'delete')}
@@ -280,17 +247,6 @@ modal modal modal content
                                             </button>
                                         </div>
                                     </Dialog.Panel>
-                                        :
-                                        <Dialog.Panel className='p-12 transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all'>
-                                            <div>
-                                                <h3 className="text-xl">Are You Sure ?</h3>
-                                                <div className="flex justify-between mt-7">
-                                                    <button onClick={() => setConfirm(true)} className="px-3 py-1 bg-[#00c4ee] ">Yes</button>
-                                                    <button onClick={closeModal} className="px-3 py-1 bg-[#8deaff]">No</button>
-                                                </div>
-                                            </div>
-                                        </Dialog.Panel>
-                                }
 
 
                             </Transition.Child>

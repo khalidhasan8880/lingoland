@@ -40,6 +40,7 @@ const MyClasses = () => {
         axiosSecure.post(`/classes/update/${data._id}`, data)
             .then(res => {
                 console.log(res.data);
+                closeModal()
                 refetch()
             })
     };
@@ -281,7 +282,7 @@ const MyClasses = () => {
                                                     </div>
                                                     <div className="my-7 ">
                                                         <label className="ms-5">Add A Class Sort Title*</label>
-                                                        <input placeholder="Your Class Title" className="w-full px-4 py-3 border-2 my-1 rounded-full " {...register("title", { required: true })} />
+                                                        <input defaultValue={modalContent?.title} placeholder="Your Class Title" className="w-full px-4 py-3 border-2 my-1 rounded-full " {...register("title", { required: true })} />
                                                     </div>
                                                     <input hidden type="text" defaultValue='pending' {...register("status")} />
                                                     <input hidden type="text" defaultValue={modalContent?._id} {...register("_id")} />

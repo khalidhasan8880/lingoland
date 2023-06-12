@@ -24,11 +24,15 @@ const Footer = () => {
 
                 </div>
 
-                <div className="text-center mt-8">
+                <div className="text-center mt-20">
                     <div className="flex justify-evenly w-40 mx-auto my-4">
                         <FaFacebook className="cursor-pointer hover:text-[#3de09b]" size={32}></FaFacebook>
                         <FaLinkedin className="cursor-pointer hover:text-[#3de09b]" size={32}></FaLinkedin>
                         <FaTwitter className="cursor-pointer hover:text-[#3de09b]" size={32}></FaTwitter>
+                    </div>
+                    <div className="flex gap-x-4 justify-center items-center my-2">
+                        <p>Address: Dhaka, Bangladesh</p> ||
+                        <p>Phone: +0239894380903</p>
                     </div>
                     <p className="text-sm opacity-75">&copy; {currentYear} Lingoland. All rights reserved.</p>
                 </div>

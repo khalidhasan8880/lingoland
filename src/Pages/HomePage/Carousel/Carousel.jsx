@@ -21,7 +21,7 @@ const Carousel = () => {
                 {/* w-full h-auto py-20 bg-[#eef9f8]  */}
                 {
                     classes?.slice(0, 8).map(cls => <SwiperSlide key={cls?._id}>
-                        <div className={`${enabled ? 'bg-[#082621]' : 'bg-[#eef9f8]'} w-full h-auto py-20 `}>
+                        <div className={`${enabled ? 'bg-[#082621]' : 'bg-[#e2f7f5]'} w-full h-auto py-20 `}>
                             <div className="ms-3 sm:w-2/3 sm:gap-x-4 sm:ms-10 flex flex-wrap divide-x-4 gap-2 divide-[#3de09b]">
                                 <img className="w-72 sm:h-96 h-72 sm:w-96  sm:rounded-s-xl" src={cls?.photo} alt="" />
                                 <div className="flex py-4 flex-col gap-y-4 items-start px-3 justify-center "

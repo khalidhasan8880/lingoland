@@ -26,6 +26,7 @@ const AuthProvider = ({ children }) => {
         return signInWithEmailAndPassword(auth, email, password)
     }
     const logOut = () => {
+        setLoading(true)
         return signOut(auth)
     }
 
@@ -47,11 +48,12 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             if (currentUser) {
-                setUser(currentUser)
-                setLoading(false)
+                
                 axiosSecure.post('/jwt', { email: currentUser?.email })
                     .then((res) => {
                         localStorage.setItem('access-token', res?.data?.token)
+                        setUser(currentUser)
+                        setLoading(false)
                     })
 
             } else {

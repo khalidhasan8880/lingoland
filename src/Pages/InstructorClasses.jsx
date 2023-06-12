@@ -24,14 +24,18 @@ const InstructorClasses = () => {
 
     return (
         <section>
+           
+            <>
+                {
+                    classes?.length !== 0 ?  classes.map(cls =>   <PopularCard
+                        key={cls?._id}
+                        cls={cls}
+                        ></PopularCard>)
+                        :
+                        <h2 className="text-center text-3xl">No classes Found</h2>
+                }
+            </>
             
-            {
-                classes.map(cls =>   <PopularCard
-                    key={cls?._id}
-                    cls={cls}
-                    ></PopularCard>)
-              
-            }
         </section>
     );
 };
