@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { FaEye, FaUser } from "react-icons/fa";
-import useClasses from "../../../hooks/useClasses";
+import {  FaUser } from "react-icons/fa";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
@@ -8,12 +7,12 @@ import { useForm } from "react-hook-form";
 import { Helmet } from "react-helmet-async";
 import Button from "../../../components/Button/Button";
 import { Toaster, toast } from "react-hot-toast";
+import Loading from "../../../components/Loading/Loading";
 
 const ManageClasses = () => {
     const { register, handleSubmit, } = useForm();
     const axiosSecure = useAxiosSecure()
     let [isOpen, setIsOpen] = useState(false)
-    const [classes, isLoading, refetch] = useClasses()
     const [id, setId] = useState('')
     // modal open & close handler function
     function closeModal() {
@@ -23,7 +22,13 @@ const ManageClasses = () => {
     function openModal() {
         setIsOpen(true)
     }
-
+    
+    const { data:classes = [], isLoading, refetch } = useQuery({
+        queryKey: ['allClasses'],
+        enabled:!! localStorage.getItem('access-token'),
+        queryFn: async () => axiosSecure.get('/all-classes/admin').then(res=> res.data)
+    })
+    
     // update to approved class
     const approveHandler = (id) => {
         axiosSecure.patch(`/classes/approve/${id}`)
@@ -52,11 +57,13 @@ const ManageClasses = () => {
 
     }
 
+
+    if (isLoading) {
+        return <Loading></Loading>
+    }
     return (
         <>
-            {
-                classes.length > 0 ?
-                    <div>
+            <div>
                         <Toaster></Toaster>
                         <Helmet>
                             <title>LINGOLAND | Manage Classes </title>
@@ -149,11 +156,6 @@ const ManageClasses = () => {
                             </tbody>
                         </table>
                     </div>
-                    :
-                    <h3 className="text-center font-bold text-3xl">
-                        No Data Found
-                    </h3>
-            }
 
 
 

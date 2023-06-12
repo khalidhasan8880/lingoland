@@ -19,7 +19,7 @@ const PopularCard = ({ cls }) => {
     return (
         <div className={`${enabled? 'bg-[#082621] text-white':''} p-4 h-[500px] rounded-lg  sm:w-96 w-80 relative ${cls?.seats ? 'shadow-xl':'shadow-none'}`} data-aos="fade-up"
             data-aos-duration="1000">
-            <img className="rounded-lg w-full" src={cls?.photo} alt="" />
+            <img className="rounded-lg h-60 w-full" src={cls?.photo} alt="" />
             <div className="p-1 mt-3 ">
                 <div className="flex justify-between items-center">
                     <div className="bg-pr  rounded-full py-1 px-3">

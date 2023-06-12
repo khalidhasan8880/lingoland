@@ -4,20 +4,23 @@ import { Fragment, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { useQuery } from "@tanstack/react-query";
 import toast, { Toaster } from 'react-hot-toast';
+import Loading from "../../../components/Loading/Loading";
+import { useAuth } from "../../../hooks/useAuth";
 // import { useRole } from "../../../hooks/useRole";
 
 const ManageUser = () => {
     // hooks
     const axiosSecure = useAxiosSecure()
+    const {user} =  useAuth()
     let [modalData, setModalData] = useState({})
-    let [users, setUsers] = useState([])
+ 
     let [isOpen, setIsOpen] = useState(false)
     let [actionModal, setActionModal] = useState('viewUser')
     let [confirm, setConfirm] = useState(false)
     let [updateState, setUpdateState] = useState(null)
     let [userId, setUserId] = useState(null)
 
-    
+
     if (confirm) {
         closeModal()
     }
@@ -41,51 +44,63 @@ const ManageUser = () => {
 
 
     useEffect(() => {
-        axiosSecure.get('/users',)
-            .then(res => {
-                console.log(res.data);
-                setUsers(res.data)
-            })
+        
     }, [confirm])
 
 
-
-    useQuery({
-        queryKey: ['updateUser', updateState, userId],
-        enabled: confirm && updateState === 'admin' || updateState === 'instructor',
-        queryFn: async () => {
-            return axiosSecure.post(`/users/${updateState}/${userId}`)
-                .then(res => {
-                    console.log(res);
-                    closeModal()
-                    if (res.data.modifiedCount) {
-                        toast.success(`Successful`)
-                    }
-                    return res.data
-                })
-                .catch(err => {
-                    console.log(err);
-                    toast.error('request unsuccessful')
-                })
-        }
-    })
+const { data:users=[] , isLoading, refetch} = useQuery({
+    queryKey:['allUsers', user?.email],
+    enabled:!!localStorage.getItem('access-token'),
+    queryFn:async()=> await axiosSecure.get('/users').then(res => res.data)
+})
 
 
-    useEffect(()=>{
-        if (updateState === 'delete' && confirm) {
-            axiosSecure.delete(`/users/${updateState}/${userId}`)
-            .then(res=>{
+    if (updateState === 'delete' && confirm && !!localStorage.getItem('access-token')) {
+        axiosSecure.delete(`/users/${updateState}/${userId}`)
+            .then(res => {
                 console.log(res.data);
+                refetch()
                 if (res.data?.deletedCount) {
                     toast.success('user deleted successful')
                 }
             })
-            .catch(err=>{
+            .catch(err => {
                 console.log(err);
                 toast.error('request unsuccessful')
             })
-        }
-    },[confirm])
+    }
+
+    if (updateState === 'instructor' && confirm && !!localStorage.getItem('access-token')) {
+        axiosSecure.post(`/users/${updateState}/${userId}`)
+            .then(res => {
+                console.log(res);
+                closeModal()
+                refetch()
+                if (res.data.modifiedCount) {
+                    toast.success(`Successful`)
+                }
+                return res.data
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+
+    if (updateState === 'admin' && confirm && !!localStorage.getItem('access-token')) {
+        axiosSecure.post(`/users/${updateState}/${userId}`)
+            .then(res => {
+                console.log(res);
+                closeModal()
+                refetch()
+                if (res.data.modifiedCount) {
+                    toast.success(`Successful`)
+                }
+                return res.data
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
 
 
 
@@ -97,7 +112,7 @@ const ManageUser = () => {
         openModal()
     }
 
-    const userDeleteHandler=(id, state)=>{
+    const userDeleteHandler = (id, state) => {
         console.log(id, state);
         setUserId(id)
         setUpdateState(state)
@@ -105,6 +120,9 @@ const ManageUser = () => {
         openModal()
     }
 
+    if (isLoading) {
+        return <Loading></Loading>
+    }
 
     return (
         <div className="container mx-auto">
@@ -150,7 +168,7 @@ const ManageUser = () => {
                                                     <FaUser size={22}></FaUser>
                                             }
                                             <div className="flex gap-x-2 items-center font-medium text-gray-800">
-                                                <span>khalid hasa</span> <FaEye size={20}></FaEye></div>
+                                                <span>{user?.name}</span> <FaEye size={20}></FaEye></div>
                                             <span className="text-sm bg-[#3de09ce3] rounded-xl px-2  text-center text-white">{user?.role}</span>
                                         </div>
                                     </td>
@@ -164,7 +182,7 @@ const ManageUser = () => {
                                         <FaUserCog className="text-center ms-3" onClick={() => modalDataHandler(user)} size={23}></FaUserCog>
                                     </td>
                                     <td className="p-2 hidden sm:table-cell">
-                                    <button onClick={()=>userDeleteHandler(user?._id, 'delete')} className="text-sm bg-[#e03d3de3] rounded-xl px-2  text-center text-white"> Delete </button>
+                                        <button onClick={() => userDeleteHandler(user?._id, 'delete')} className="text-sm bg-[#e03d3de3] rounded-xl px-2  text-center text-white"> Delete </button>
                                     </td>
 
                                 </tr>
