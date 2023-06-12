@@ -8,10 +8,10 @@ const InstructorCard = ({instructor}) => {
                 
                 <div className="px-2 mt-2">
                     <h3 className="text-2xl my-5">
-                        {instructor.name}
+                        {instructor?.name}
                     </h3>
                     <h3 className="">
-                        {instructor.email}
+                        {instructor?.email}
                     </h3>
                     <div className="flex justify-between items-center absolute bottom-5 w-64 sm:w-80">
                         <div className="flex gap-x-3 items-center">

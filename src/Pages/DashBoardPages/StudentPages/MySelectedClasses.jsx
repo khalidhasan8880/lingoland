@@ -3,7 +3,6 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "../../../hooks/useAuth";
 import SelectedCard from "../../../components/SelectedCard/SelectedCard";
-import SectionTitle from "../../../components/SectionTitle/SectionTitle";
 import { Link } from "react-router-dom";
 import Loading from "../../../components/Loading/Loading";
 import { Dialog, Transition } from "@headlessui/react";
@@ -18,6 +17,7 @@ const stripePromise = loadStripe(`${import.meta.env.VITE_PK_KEY}`)
 const MySelectedClasses = () => {
     // hooks
     const [purchasedClassId, setPurchasedClassId] = useState('')
+    const [purchasedClassName, setPurchasedClassName] = useState('')
     const [purchasedClassPrice, setPurchasedClassPrice] = useState(0)
     let [isOpen, setIsOpen] = useState(false)
     const axiosSecure = useAxiosSecure()
@@ -36,8 +36,8 @@ const MySelectedClasses = () => {
     function closeModal() {
         setIsOpen(false)
         setPurchasedClassId('')
+        setPurchasedClassName('')
         setPurchasedClassPrice(0)
-
     }
 
     function openModal() {
@@ -51,8 +51,9 @@ const MySelectedClasses = () => {
 
 
     // payments related operation
-    const paymentForSingleItemHandler = (id, price) => {
+    const paymentForSingleItemHandler = (id, price, name) => {
         setPurchasedClassId(id)
+        setPurchasedClassName(name)
         setPurchasedClassPrice(price)
         console.log(id);
         openModal()
@@ -127,6 +128,7 @@ const MySelectedClasses = () => {
                                        <CheckoutFormForSingleItem 
                                        price={purchasedClassPrice}
                                        purchasedClassId={purchasedClassId}
+                                       purchasedClassName={purchasedClassName}
                                        setIsOpen={setIsOpen}
                                        refetchSelectedCards={refetchSelectedCards}
                                        ></CheckoutFormForSingleItem>

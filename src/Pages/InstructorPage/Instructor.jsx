@@ -11,8 +11,8 @@ const Instructor = () => {
     })
     console.log(data);
     return (
-        <section className="mt-60">
-            <SectionTitle>The Instructors</SectionTitle>
+        <section >
+            <SectionTitle>Instructors</SectionTitle>
             <div className="flex gap-5 flex-wrap justify-center items-center">
                 {
                     data?.instructors?.map(instructor => <InstructorCard

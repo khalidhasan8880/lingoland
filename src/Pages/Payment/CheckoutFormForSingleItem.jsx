@@ -4,7 +4,7 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useAuth } from "../../hooks/useAuth";
 import { Toaster, toast } from "react-hot-toast";
 
-const CheckoutFormForSingleItem = ({price, purchasedClassId, setIsOpen,refetchSelectedCards}) => {
+const CheckoutFormForSingleItem = ({price, purchasedClassId, purchasedClassName, setIsOpen,refetchSelectedCards}) => {
     const stripe = useStripe();
     const elements = useElements();
     const [showError, setShowError] = useState('')
@@ -75,6 +75,7 @@ const CheckoutFormForSingleItem = ({price, purchasedClassId, setIsOpen,refetchSe
                 price,
                 quantity:1,
                 purchasedClassId:purchasedClassId,
+                purchasedClassName:purchasedClassName,
             })
             .then(res=>{
                 console.log("payment success ", res.data);

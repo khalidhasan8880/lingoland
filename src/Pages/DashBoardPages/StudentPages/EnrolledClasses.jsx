@@ -3,11 +3,12 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "../../../hooks/useAuth";
 import Loading from "../../../components/Loading/Loading";
+import EnrolledCard from "../../../components/EnrolledCard/EnrolledCard";
 
 const EnrolledClasses = () => {
     const axiosSecure = useAxiosSecure()
     const {user} = useAuth()
-    const {data:enrolledClasses=[], isLoading} = useQuery({
+    const {data:classes, isLoading} = useQuery({
         queryKey:['enrolledClasses', user?.email],
         queryFn:async()=>axiosSecure.get(`/enrolled-classes/${user?.email}`).then(res=>res.data)
     })
@@ -15,10 +16,12 @@ const EnrolledClasses = () => {
     if (isLoading) {
         return <Loading></Loading>
     }
-    console.log(enrolledClasses);
+    console.log(classes);
     return (
         <div>
-            
+            {
+                classes?.map(cls=> <EnrolledCard key={cls?._id} cls={cls}></EnrolledCard>)
+            }
         </div>
     );
 };
