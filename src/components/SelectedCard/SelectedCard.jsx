@@ -1,12 +1,20 @@
+import { Toaster, toast } from "react-hot-toast";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
-const SelectedCard = ({ cart, paymentForSingleItemHandler }) => {
-
-    const deleteCartHandler = () => {
-
+const SelectedCard = ({ cart, paymentForSingleItemHandler, refetchSelectedCards }) => {
+const axiosSecure = useAxiosSecure()
+    const deleteCartHandler = (id) => {
+        axiosSecure.delete(`/delete-single-cart/${id}`)
+            .then(() => {
+                toast.success('delete successful')
+                refetchSelectedCards()
+                // TODO: REDIRECT PAYMENT HISTORY WITH NAVIGATE
+            })
     }
     return (
         <div className="flex justify-between gap-4  rounded-xl shadow-xl h-72 pe-4" data-aos="fade-up"
-        data-aos-duration="1000">
+            data-aos-duration="1000">
+                <Toaster></Toaster>
             <img className="w-72 rounded-s-xl" src={cart?.photo} alt="" />
             <div className="flex flex-col justify-around">
                 <p className="text-[#32f9a6] ">
@@ -24,7 +32,7 @@ const SelectedCard = ({ cart, paymentForSingleItemHandler }) => {
                     <h3>Price: ${cart?.price}</h3>
                     <div>
                         <button
-                            onClick={()=> paymentForSingleItemHandler(cart?._id , cart?.price, cart?.className)}
+                            onClick={() => paymentForSingleItemHandler(cart?._id, cart?.price, cart?.className)}
                             className="bg-gradient-to-r from-[#3de09b] to-[#00c4ee] text-white text-center px-6 py-2 cursor-pointer rounded-full mr-2"> Pay
                         </button>
                         <button

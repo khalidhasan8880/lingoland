@@ -1,7 +1,13 @@
 import Lottie from "lottie-react";
 import learningAnimation from "./learningAnimation.json";
 import { AiFillCaretRight } from 'react-icons/ai'
+import { useAuth } from "../../../hooks/useAuth";
+import Loading from "../../../components/Loading/Loading";
 const AnimationSection = () => {
+    const {loading} = useAuth()
+    if (loading) {
+        return <Loading></Loading>
+    }
     return (
         <section className="mt-40">
             <div className="grid sm:grid-cols-2 content-center  ">
