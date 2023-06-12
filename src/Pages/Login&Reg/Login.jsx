@@ -10,6 +10,7 @@ const Login = () => {
     const {logIn}=useAuth()
     const [showPass, setShowPass] = useState(false)
     const { register, handleSubmit } = useForm();
+    const {enabled } = useAuth();
     const navigate= useNavigate()
     const onSubmit = data => 
     {
@@ -28,7 +29,7 @@ const Login = () => {
 
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="md:w-1/2  mt-24 bg-pr mx-auto border rounded-xl font-semibold sm:p-11 p-6 shadow-lg">
+        <form onSubmit={handleSubmit(onSubmit)} className={`md:w-1/2 ${enabled?'bg-[#082621]':'bg-pr'} mt-24 mx-auto border rounded-xl font-semibold sm:p-11 p-6 shadow-lg`}>
             <h1 className="text-center text-3xl font-bold ">Please Login</h1>
             <div className="my-7 ">
                 <label className="ms-5">Email</label>
@@ -47,7 +48,7 @@ const Login = () => {
             {/* submit btn */}
             <Button>submit</Button>
             {/* footer */}
-            <FormFooter redirect="/login" redirectTitle="Login"></FormFooter>
+            <FormFooter  redirect="/sign_up" redirectMessage='New To LingoLand Please' redirectTitle="Sign Up"></FormFooter>
 
         </form>
     );

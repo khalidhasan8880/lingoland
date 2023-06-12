@@ -29,7 +29,7 @@ const Carousel = () => {
 
                                     <div >
                                         <h2 data-aos="fade-right"
-                                        data-aos-duration="300"
+                                        data-aos-duration="200"
                                             data-aos-easing="ease-in-sine"
                                             className="text-xl sm:text-5xl font-semibold mb-3">{cls?.className}</h2>
                                         <p 

@@ -11,7 +11,7 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const Register = () => {
     const axiosSecure = useAxiosSecure()
-    const { createUser, user, updateUser } = useAuth()
+    const { createUser, user, updateUser, enabled } = useAuth()
 
     const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = data => {
@@ -45,7 +45,7 @@ const Register = () => {
 
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="md:w-1/2 mt-24 bg-pr mx-auto border rounded-xl font-semibold sm:p-11 p-6 shadow-lg">
+        <form onSubmit={handleSubmit(onSubmit)} className={`md:w-1/2 mt-24 ${enabled?'':''} mx-auto border rounded-xl font-semibold sm:p-11 p-6 shadow-lg`}>
             <h1 className="text-center text-3xl font-bold ">Please Sign Up</h1>
             <div className="my-7 ">
                 <label className="ms-5">Name*</label>
@@ -106,7 +106,7 @@ const Register = () => {
             {/* submit btn */}
             <Button>submit</Button>
             {/* footer */}
-            <FormFooter redirect="/login" redirectTitle="Login"></FormFooter>
+            <FormFooter redirect="/login" redirectTitle="Login" redirectMessage='Already Have Account? Please'></FormFooter>
             <Toaster />
         </form>
     );

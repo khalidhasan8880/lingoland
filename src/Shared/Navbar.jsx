@@ -10,13 +10,14 @@ import { Switch } from "@headlessui/react";
 const Navbar = () => {
     const [open, setOpen] = useState(false)
     const { user, logOut, setEnabled, enabled } = useAuth()
-   
+    
 
 
 
     const logOutHandler = () => {
         logOut()
             .then(res => {
+                location.reload();
                 console.log(res);
             })
             .catch(err => {
