@@ -3,7 +3,7 @@ import { useAuth } from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const PopularCard = ({ cls }) => {
-    const { user } = useAuth()
+    const { user, enabled } = useAuth()
     const axiosSecure = useAxiosSecure()
     const addCartHandler = (id) => {
         console.log(id);
@@ -17,7 +17,7 @@ const PopularCard = ({ cls }) => {
     }
     console.log(user);
     return (
-        <div className={`p-4 h-[500px] bg-white rounded-lg  sm:w-96 w-80 relative ${cls?.seats ? 'shadow-xl':'shadow-none'}`} data-aos="fade-up"
+        <div className={`${enabled? 'bg-[#082621] text-white':''} p-4 h-[500px] rounded-lg  sm:w-96 w-80 relative ${cls?.seats ? 'shadow-xl':'shadow-none'}`} data-aos="fade-up"
             data-aos-duration="1000">
             <img className="rounded-lg w-full" src={cls?.photo} alt="" />
             <div className="p-1 mt-3 ">
@@ -55,7 +55,7 @@ const PopularCard = ({ cls }) => {
                     <div className="flex justify-between items-center absolute bottom-5 w-64 sm:w-80">
                         <div className="flex gap-x-3 items-center">
                             <img className="rounded-full w-10 h-10" src={cls?.instructorPhoto} alt="" />
-                            <h3 className="text-black">{cls?.instructorName}</h3>
+                            <h3>{cls?.instructorName}</h3>
                         </div>
                         <div>
                             Price: ${cls?.price}

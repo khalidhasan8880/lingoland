@@ -1,15 +1,15 @@
-import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
+
 import InstructorCard from "../../components/InstructorCard/InstructorCard";
+import Loading from "../../components/Loading/Loading";
 import SectionTitle from "../../components/SectionTitle/SectionTitle";
+import useInstructors from "../../hooks/useInstructors";
 
 const Instructor = () => {
-    const axiosSecure = useAxiosSecure()
-    const { data = [] } = useQuery({
-        queryKey: ['allInstructor'],
-        queryFn: async () => axiosSecure.get('/instructors').then(res => res.data)
-    })
+    const [data, isLoading] = useInstructors()
     console.log(data);
+    if (isLoading) {
+        return <Loading></Loading>
+    }
     return (
         <section >
             <SectionTitle>Instructors</SectionTitle>
@@ -17,6 +17,7 @@ const Instructor = () => {
                 {
                     data?.instructors?.map(instructor => <InstructorCard
                         key={instructor._id}
+                        classes={data?.classes}
                         instructor={instructor}
                     ></InstructorCard>)
                 }

@@ -20,6 +20,7 @@ import Payment from "./Pages/Payment/Payment";
 import PaymentHistory from "./Pages/DashBoardPages/StudentPages/PaymentHistory";
 import EnrolledClasses from "./Pages/DashBoardPages/StudentPages/EnrolledClasses";
 import Classes from "./Pages/Classes/Classes";
+import InstructorClasses from "./Pages/InstructorClasses";
 // import AdminRoute from "./PrivetRoutes/AdminRoute";
 
 const router = createBrowserRouter([
@@ -52,6 +53,10 @@ const router = createBrowserRouter([
             {
                 path:'/classes',
                 element:<Classes></Classes>
+            },
+            {
+                path:'/classes/instructor/:email',
+                element:<InstructorClasses></InstructorClasses>
             },
             
 

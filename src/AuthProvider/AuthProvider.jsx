@@ -10,7 +10,7 @@ export const AuthContext = createContext(null)
 // main component
 const AuthProvider = ({ children }) => {
 
-
+    const [enabled, setEnabled] = useState(false) // theme - dark and light
     const axiosSecure = useAxiosSecure()
     const [user, setUser] = useState(null)
     const [loading, setLoading] = useState(true)
@@ -72,7 +72,9 @@ const AuthProvider = ({ children }) => {
         continueWithGoogle,
         createUser,
         logOut, 
-        updateUser
+        updateUser,
+        setEnabled,
+        enabled,
     }
     return (
         <AuthContext.Provider value={authInformation}>

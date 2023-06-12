@@ -134,7 +134,7 @@ const Dashboard = () => {
 
             <div className="flex">
 
-                <ul className="md:w-60 rounded-lg h-96 p-3 bg-pr hidden md:block ">
+                <ul className="md:w-60 rounded-lg h-96  p-3 hidden md:block ">
                     {
                         drawerLinks
                     }

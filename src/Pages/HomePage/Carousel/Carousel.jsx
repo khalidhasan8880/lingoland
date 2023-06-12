@@ -3,9 +3,12 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper";
 import "swiper/css/pagination";
 import "swiper/css";
+import useClasses from "../../../hooks/useClasses";
+import { useAuth } from "../../../hooks/useAuth";
 
 const Carousel = () => {
-
+    const {enabled} = useAuth()
+    const [classes] = useClasses()
     return (
         <div className="mt-20">
             <Swiper
@@ -16,24 +19,26 @@ const Carousel = () => {
                 modules={[Pagination]}
                 className="mySwiper"
             >
-                <SwiperSlide>
-                    <div className="w-full h-96 bg-slate-300"> we</div>
-                </SwiperSlide>
-                <SwiperSlide>
-                    <div className="w-full h-96 bg-slate-300">ewr </div>
-                </SwiperSlide>
-                <SwiperSlide>
-                    <div className="w-full h-96 bg-slate-300"> wre</div>
-                </SwiperSlide>
-                <SwiperSlide>
-                    <div className="w-full h-96 bg-slate-300">wer </div>
-                </SwiperSlide>
-                <SwiperSlide>
-                    <div className="w-full h-96 bg-slate-300"> wr</div>
-                </SwiperSlide>
-                <SwiperSlide>
-                    <div className="w-full h-96 bg-slate-300">we </div>
-                </SwiperSlide>
+{/* w-full h-auto py-20 bg-[#eef9f8]  */}
+                {
+                    classes?.slice(0,8).map(cls => <SwiperSlide key={cls?._id}>
+                        <div className={`${enabled? 'bg-[#082621]':'bg-[#eef9f8]'} w-full h-auto py-20 `}>
+                            <div className=" sm:w-2/3 sm:ms-10 flex flex-wrap divide-x-4 gap-2 divide-[#3de09b]  ">
+                                <img className="w-72 h-72 rounded-s-xl" src={cls?.photo} alt="" />
+                                <div className="flex py-4 flex-col gap-y-4 items-start px-3 justify-around "
+                                >
+                                    <div>
+                                        <h2 className="text-xl font-semibold">{cls?.className}</h2>
+                                        <p>{cls?.title}</p>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </SwiperSlide>)
+                }
+
+
 
             </Swiper>
         </div>

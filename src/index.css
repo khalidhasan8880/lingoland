@@ -11,12 +11,10 @@ body {
 }
 
 h1 {
-    color: #0d4038;
     @apply font-extrabold
 }
 
 p {
-    color: #041513;
     @apply font-extralight
 }
 
@@ -49,6 +47,6 @@ font-color : #0d4038 */
 
 
 section{
-    padding: 10px;
+
     margin-top: 100px;
 }

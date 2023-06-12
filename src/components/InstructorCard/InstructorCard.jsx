@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 
 const InstructorCard = ({instructor}) => {
     return (
@@ -6,8 +7,8 @@ const InstructorCard = ({instructor}) => {
             <img className="rounded-lg w-full h-72" src={instructor?.photo} alt="" />
             <div className="p-1 mt-3 ">
                 
-                <div className="px-2 mt-2">
-                    <h3 className="text-2xl my-5">
+                <div className="px-2">
+                    <h3 className="text-2xl">
                         {instructor?.name}
                     </h3>
                     <h3 className="">
@@ -17,11 +18,10 @@ const InstructorCard = ({instructor}) => {
                         <div className="flex gap-x-3 items-center">
                         
                         </div>
-                        <div>
-                        <button
+                        <Link 
+                            to={`/classes/instructor/${instructor?.email}`}
                             className="bg-gradient-to-r from-[#3de09b] to-[#00c4ee] text-white text-center px-3 py-2 rounded-full">See More Classes
-                        </button>
-                        </div>
+                        </Link>
                     </div>
                 </div>
             </div>

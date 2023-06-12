@@ -4,20 +4,24 @@ import { FaBars, FaSignInAlt, FaSignOutAlt, FaUser } from 'react-icons/fa'
 import { AiOutlineClose } from 'react-icons/ai'
 import { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
+import { Switch } from "@headlessui/react";
 
 
 const Navbar = () => {
     const [open, setOpen] = useState(false)
-    const { user, logOut } = useAuth()
-    // 
+    const { user, logOut, setEnabled, enabled } = useAuth()
+   
+
+
+
     const logOutHandler = () => {
         logOut()
-        .then(res=>{
-            console.log(res);
-        })
-        .catch(err=>{
-            console.log(err);
-        })
+            .then(res => {
+                console.log(res);
+            })
+            .catch(err => {
+                console.log(err);
+            })
     }
     const navOptions = <>
 
@@ -41,41 +45,60 @@ const Navbar = () => {
                 Dashboard
             </NavLink>
         </li>
+
+        <li >
+            <Switch.Group>
+                <div className="flex items-center">
+                    <Switch.Label className="mr-4">{enabled ? 'Dark' : 'Light'}</Switch.Label>
+                    <Switch
+                        checked={enabled}
+                        onChange={setEnabled}
+                        className={`${enabled ? 'bg-teal-500' : 'bg-black'
+                            } relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none  focus:ring-indigo-500 `}
+                    >
+                        <span
+                            className={`${enabled ? 'translate-x-6' : 'translate-x-1'
+                                } inline-block h-4 w-4 transform rounded-full bg-white transition-transform`}
+                        />
+                    </Switch>
+                </div>
+            </Switch.Group>
+        </li>
         <li>
             {
-                user?.uid ?
-                <Link to='/my_profile'>
-                    {
-                        user?.photoURL ?
-                            <img
-                                className="rounded-full w-10 h-10"
-                                src={user?.photoURL}
-                                width="40"
-                                height="40"
-                            />
-                            :
-                            <FaUser size={22}></FaUser>
-                    }
-                </Link>
-                :
-                <Link className="hover:text-[#3de09b] cursor-pointer"  to='/login'><FaSignInAlt size={26}></FaSignInAlt></Link>
+                user ? <FaSignOutAlt onClick={logOutHandler} className="hover:text-[#3de09b] cursor-pointer" size={26}></FaSignOutAlt> : ''
             }
         </li>
         <li>
-           {user?.email}
-        </li>
-        <li>
             {
-                user ? <FaSignOutAlt onClick={logOutHandler} className="hover:text-[#3de09b] cursor-pointer" size={26}></FaSignOutAlt>: ''
+                user?.uid ?
+                    <Link to='/my_profile'>
+                        {
+                            user?.photoURL ?
+                                <img
+                                    className="rounded-full w-10 h-10"
+                                    src={user?.photoURL}
+                                    width="40"
+                                    height="40"
+                                />
+                                :
+                                <FaUser size={22}></FaUser>
+                        }
+                    </Link>
+                    :
+                    <Link className="hover:text-[#3de09b] cursor-pointer" to='/login'><FaSignInAlt size={26}></FaSignInAlt></Link>
             }
         </li>
 
     </>
 
+// 
 
-    
+
+
+
     return (
-        <div className="flex justify-between bg-pr mt-0 backdrop-blur-sm  bg-opacity-30 fixed z-10 top-0 w-full px-4 sm:px-12 md:px-28 py-3">
+        <div className={`${enabled ? 'bg-[#082621] text-white':'bg-pr '} flex justify-between mt-0 backdrop-blur-sm   fixed z-10 top-0 w-full px-4 sm:px-12 md:px-28 py-3`}>
             <Link to='/'>
                 <div className="flex items-center">
                     <img className="w-10 sm:w-12" src={logo} alt="" />
