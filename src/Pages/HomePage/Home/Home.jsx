@@ -9,6 +9,7 @@ import Banner from "../Banner/Banner";
 import PopularClasses from "../PopularClasses/PopularClasses";
 import Carousel from "../Carousel/Carousel";
 import Instructor from "../../InstructorPage/Instructor";
+import AnimationSection from "../AnimationSection/AnimationSection";
 
 const Home = () => {
     
@@ -33,6 +34,7 @@ const Home = () => {
             {/* ---------------------------------------------------- */}
             <PopularClasses></PopularClasses>
             <Instructor></Instructor>
+            <AnimationSection></AnimationSection>
         </>
     );
 };

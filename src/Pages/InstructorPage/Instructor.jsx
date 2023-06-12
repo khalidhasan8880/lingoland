@@ -11,7 +11,7 @@ const Instructor = () => {
         return <Loading></Loading>
     }
     return (
-        <section  className="h-screen">
+        <section className="mt-40">
             <SectionTitle>Meet Our Top Instructors</SectionTitle>
             <div className="flex gap-5 flex-wrap justify-center items-center">
                 {
