@@ -4,10 +4,13 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Link } from "react-router-dom";
+import { useRole } from "../../hooks/useRole";
+import Loading from "../Loading/Loading";
 
 const PopularCard = ({ cls }) => {
     let [isOpen, setIsOpen] = useState(false)
     const { user, enabled } = useAuth()
+    const  [usersRole, isLoading] = useRole()
     const axiosSecure = useAxiosSecure()
     const addCartHandler = (id) => {
 
@@ -37,7 +40,6 @@ const PopularCard = ({ cls }) => {
         setIsOpen(true)
     }
 
-    console.log(user);
     return (
         <div className={`${enabled? 'bg-[#082621] text-white':''} p-4 h-[500px] rounded-lg  sm:w-96 w-80 relative ${cls?.seats ? 'shadow-xl':'shadow-none'}`} data-aos="fade-up"
             data-aos-duration="1000">
@@ -49,18 +51,16 @@ const PopularCard = ({ cls }) => {
                     </div>
                     <div>
                         {
-                            cls?.seats > 0
+                            cls?.seats > 0 && (usersRole?.role !== 'admin' && usersRole?.role !== 'instructor')
                                 ?
                                 <button
-                                    disabled={!cls?.seats}
+                                    disabled={!cls?.seats }
                                     onClick={() => addCartHandler(cls?._id)}
                                     className="bg-gradient-to-r from-[#3de09b] to-[#00c4ee] text-white text-center px-3 py-2 cursor-pointer rounded-full">Add to cart
                                 </button>
                                 :
 
                                 <button
-                                    disabled={!cls?.seats}
-                                    onClick={() => addCartHandler(cls?._id)}
                                     className="bg-gradient-to-r from-[#e4d0bf] to-[#e4a4a4] text-white text-center px-3 py-2 rounded-full active:top-0">Add to cart
                                 </button>
                         }
