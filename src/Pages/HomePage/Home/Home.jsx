@@ -1,5 +1,4 @@
 import { Helmet } from "react-helmet-async";
-import Banner from "../Banner/Banner";
 
 // import useAxiosSecure from "../../../hooks/useAxiosSecure";
 // import { useAuth } from "../../../hooks/useAuth";
@@ -28,9 +27,6 @@ const Home = () => {
                 <title>LINGOLAND | Home </title>
             </Helmet>
             <Carousel></Carousel>
-            <Banner></Banner>
-
-
             {/* ---------------------------------------------------- */}
             <PopularClasses></PopularClasses>
             <Instructor></Instructor>

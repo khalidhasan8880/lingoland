@@ -1,11 +1,19 @@
 import { toast } from "react-hot-toast";
 import { useAuth } from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { Fragment, useState } from "react";
+import { Dialog, Transition } from "@headlessui/react";
+import { Link } from "react-router-dom";
 
 const PopularCard = ({ cls }) => {
+    let [isOpen, setIsOpen] = useState(false)
     const { user, enabled } = useAuth()
     const axiosSecure = useAxiosSecure()
     const addCartHandler = (id) => {
+
+        if (!user?.email) {
+            return openModal()
+        }
         console.log(id);
         axiosSecure.put('/carts', { email: user?.email, classId: id })
             .then(res => {
@@ -15,6 +23,20 @@ const PopularCard = ({ cls }) => {
                 }
             })
     }
+
+
+
+    
+
+
+    function closeModal() {
+        setIsOpen(false)
+    }
+
+    function openModal() {
+        setIsOpen(true)
+    }
+
     console.log(user);
     return (
         <div className={`${enabled? 'bg-[#082621] text-white':''} p-4 h-[500px] rounded-lg  sm:w-96 w-80 relative ${cls?.seats ? 'shadow-xl':'shadow-none'}`} data-aos="fade-up"
@@ -63,6 +85,60 @@ const PopularCard = ({ cls }) => {
                     </div>
                 </div>
             </div>
+
+
+
+
+
+
+
+
+
+
+
+
+            <Transition appear show={isOpen} as={Fragment}>
+                <Dialog as="div" className="relative z-10" onClose={closeModal}>
+                    <Transition.Child
+                        as={Fragment}
+                        enter="ease-out duration-300"
+                        enterFrom="opacity-0"
+                        enterTo="opacity-100"
+                        leave="ease-in duration-200"
+                        leaveFrom="opacity-100"
+                        leaveTo="opacity-0"
+                    >
+                        <div className="fixed inset-0 bg-black bg-opacity-25" />
+                    </Transition.Child>
+
+                    <div className="fixed inset-0 overflow-y-auto">
+                        <div className="flex min-h-full items-center justify-center p-4 text-center">
+                            <Transition.Child
+                                as={Fragment}
+                                enter="ease-out duration-300"
+                                enterFrom="opacity-0 scale-95"
+                                enterTo="opacity-100 scale-100"
+                                leave="ease-in duration-200"
+                                leaveFrom="opacity-100 scale-100"
+                                leaveTo="opacity-0 scale-95"
+                            >
+                               <Dialog.Panel className="py-11 px-2 transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all">
+
+                                        <h2 className="mb-12 text-center text-3xl font-bold">You Need To Login First</h2>
+
+                                        <div className="flex gap-3 flex-wrap">
+                                            <Link to='/login' className="w-full rounded-full px-7 py-2 bg-[#00c4ee] text-xl text-center  font-semibold hover:bg-[#48deff] text-white ">Login As Instructor</Link>
+                                            <Link to='/login' className="w-full rounded-full px-7 py-2 bg-[#3de09b] hover:bg-[#13ff9d] font-semibold text-white text-xl text-center ">Login As Student</Link>
+                                        </div>
+                                       
+                                    </Dialog.Panel>
+
+
+                            </Transition.Child>
+                        </div>
+                    </div>
+                </Dialog>
+            </Transition>
         </div>
     );
 };

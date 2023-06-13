@@ -41,11 +41,13 @@ const Navbar = () => {
                 Classes
             </NavLink>
         </li>
-        <li>
+        {
+            user && <li>
             <NavLink to='/dashboard' className={({ isActive }) => (isActive ? 'text-pr' : '')}>
                 Dashboard
             </NavLink>
         </li>
+        }
 
         <li title="Dart theme only for Home page">
             <Switch.Group>
