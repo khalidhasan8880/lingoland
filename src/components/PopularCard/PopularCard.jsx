@@ -5,7 +5,6 @@ import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Link } from "react-router-dom";
 import { useRole } from "../../hooks/useRole";
-import Loading from "../Loading/Loading";
 
 const PopularCard = ({ cls }) => {
     let [isOpen, setIsOpen] = useState(false)
@@ -41,7 +40,7 @@ const PopularCard = ({ cls }) => {
     }
 
     return (
-        <div className={`${enabled? 'bg-[#082621] text-white':''} p-4 h-[500px] rounded-lg  sm:w-96 w-80 relative ${cls?.seats ? 'shadow-xl':'shadow-none'}`} data-aos="fade-up"
+        <div className={`${enabled? 'bg-[#082621] text-white':''} p-4 h-[500px] rounded-lg  sm:w-96 w-80 relative shadow-xl ${cls?.seats ? '':'border-2 border-red-100 bg-red-100 shadow-none'}`} data-aos="fade-up"
             data-aos-duration="1000">
             <img className="rounded-lg h-60 w-full" src={cls?.photo} alt="" />
             <div className="p-1 mt-3 ">
@@ -71,7 +70,7 @@ const PopularCard = ({ cls }) => {
                     <h3 className="text-xl my-5">
                         {cls?.title && cls?.title?.slice(0, 50)}
                     </h3>
-                    <h3 className=" my-1">
+                    <h3 className={`my-1 ${cls?.seats <= 0 ? 'text-red-600': ''}`}>
                         Available Seats: {cls?.seats} 
                     </h3>
                     <div className="flex justify-between items-center absolute bottom-5 w-64 sm:w-80">
