@@ -117,14 +117,14 @@ const Dashboard = () => {
 
 
 
-            <div onClick={() => setOpenDashboardNav(!openDAshboardNav)}  title="Drawer" className="w-16 h-16 rounded-full backdrop-blur-sm md:hidden flex justify-center items-center fixed bottom-10 right-7 bg-pr">
+            <div onClick={() => setOpenDashboardNav(!openDAshboardNav)}  title="Drawer" className="z-50 w-16 h-16 rounded-full backdrop-blur-sm md:hidden flex justify-center items-center fixed bottom-10 right-7 bg-pr">
                 <button >{openDAshboardNav ? <AiOutlineClose className="text-pr" size={33}></AiOutlineClose> : <FaBars className="text-pr" size={33}></FaBars>}</button>
             </div>
 
 
 
             {
-                openDAshboardNav && <div className=" md:hidden h-96 custom-blur ps-2  rounded-lg fixed left-0 w-4/6 " data-aos="fade-right"
+                openDAshboardNav && <div className="z-50 md:hidden h-96 custom-blur ps-2  rounded-sm fixed left-0 w-4/6 " data-aos="fade-right"
                 data-aos-offset="500"
                 data-aos-duration="500">
 

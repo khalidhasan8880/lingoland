@@ -125,7 +125,7 @@ const Navbar = () => {
 
             {
                 open &&
-                <ul className=" sm:hidden  bg-pr backdrop-blur-3xl p-3 rounded-lg flex flex-col gap-y-3 absolute right-4 top-20 font-semibold " data-aos="fade-left"
+                <ul className=" sm:hidden w-52 bg-pr  p-3 rounded-lg flex flex-col gap-y-5 absolute right-4 top-20 font-semibold " data-aos="fade-left"
                 data-aos-offset="500"
                 data-aos-duration="500">
                     {navOptions}

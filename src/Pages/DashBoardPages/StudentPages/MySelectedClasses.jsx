@@ -16,7 +16,7 @@ const stripePromise = loadStripe(`${import.meta.env.VITE_PK_KEY}`)
 // main component
 const MySelectedClasses = () => {
     // hooks
-    const [purchasedClassId, setPurchasedClassId] = useState('')
+    const [classId, setClassId] = useState('')
     const [purchasedClassName, setPurchasedClassName] = useState('')
     const [purchasedClassPrice, setPurchasedClassPrice] = useState(0)
     let [isOpen, setIsOpen] = useState(false)
@@ -35,7 +35,7 @@ const MySelectedClasses = () => {
 
     function closeModal() {
         setIsOpen(false)
-        setPurchasedClassId('')
+        setClassId('')
         setPurchasedClassName('')
         setPurchasedClassPrice(0)
     }
@@ -52,7 +52,8 @@ const MySelectedClasses = () => {
 
     // payments related operation
     const paymentForSingleItemHandler = (id, price, name) => {
-        setPurchasedClassId(id)
+        console.log(id);
+        setClassId(id)
         setPurchasedClassName(name)
         setPurchasedClassPrice(price)
         console.log(id);
@@ -128,7 +129,7 @@ const MySelectedClasses = () => {
                                     <Elements stripe={stripePromise}>
                                        <CheckoutFormForSingleItem 
                                        price={purchasedClassPrice}
-                                       purchasedClassId={purchasedClassId}
+                                       classId={classId}
                                        purchasedClassName={purchasedClassName}
                                        setIsOpen={setIsOpen}
                                        refetchSelectedCards={refetchSelectedCards}

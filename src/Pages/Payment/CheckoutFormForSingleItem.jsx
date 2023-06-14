@@ -4,21 +4,22 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useAuth } from "../../hooks/useAuth";
 import { Toaster, toast } from "react-hot-toast";
 
-const CheckoutFormForSingleItem = ({price, purchasedClassId, purchasedClassName, setIsOpen,refetchSelectedCards}) => {
+const CheckoutFormForSingleItem = ({ price, classId, purchasedClassName, setIsOpen, refetchSelectedCards }) => {
+    console.log("classId", classId);
     const stripe = useStripe();
     const elements = useElements();
     const [showError, setShowError] = useState('')
     const axiosSecure = useAxiosSecure()
     const [clientSecret, setClientSecret] = useState('')
     const [processing, setProcessing] = useState(false)
-    const { user } = useAuth()
-   
+    const { user, loading } = useAuth()
+
     useEffect(() => {
         axiosSecure.post('/create-intent-for-single-item', { price, name: user?.displayName, email: user?.email })
-        .then(res => {
-            console.log(res.data);
-            setClientSecret(res.data?.clientSecret)
-        })
+            .then(res => {
+                console.log(res.data);
+                setClientSecret(res.data?.clientSecret)
+            })
     }, [])
 
     const handleSubmit = async (event) => {
@@ -65,7 +66,7 @@ const CheckoutFormForSingleItem = ({price, purchasedClassId, purchasedClassName,
             console.log(paymentIntent);
         }
 
-        if (paymentIntent?.status === 'succeeded') {
+        if (paymentIntent?.status === 'succeeded' && !loading && !!localStorage.getItem('access-token')) {
             setProcessing(false)
             toast.success('Payment Succeeded')
             axiosSecure.post('/payment', {
@@ -73,20 +74,32 @@ const CheckoutFormForSingleItem = ({price, purchasedClassId, purchasedClassName,
                 name: user?.displayName,
                 email: user?.email,
                 price,
-                quantity:1,
-                purchasedClassId:purchasedClassId,
-                purchasedClassName:purchasedClassName,
+                quantity: 1,
+                purchasedClassId: classId,
+                purchasedClassName: purchasedClassName,
             })
-            .then(res=>{
-                console.log("payment success ", res.data);
-                setIsOpen(false)
-                axiosSecure.delete(`/delete-single-cart/${purchasedClassId}`)
-                .then(res=>{
-                    refetchSelectedCards()
-                    console.log("deleted res",res.data);
-                    // TODO: REDIRECT PAYMENT HISTORY WITH NAVIGATE
+                .then(res => {
+                    console.log("payment success ", res.data);
+                    setIsOpen(false)
+                    axiosSecure.delete(`/delete-single-cart/${user?.email}`, { classId })
+                        .then(res => {
+                            console.log("deleted res", res.data);
+                            fetch(`http://localhost:5000/delete-single-cart/${user?.email}`, {
+                                method: 'DELETE',
+                                headers: {
+                                    'content-type': 'application/json'
+                                },
+                                body: JSON.stringify({ classId })
+                            })
+                                .then(res => res.json())
+                                .then(data => {
+                                    console.log(data);
+                                    refetchSelectedCards()
+                                })
+                                .catch(err => console.log(err));
+                            // TODO: REDIRECT PAYMENT HISTORY WITH NAVIGATE
+                        })
                 })
-            })
         }
 
 

@@ -1,15 +1,25 @@
 import { Toaster, toast } from "react-hot-toast";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { useAuth } from "../../hooks/useAuth";
 
 const SelectedCard = ({ cart, paymentForSingleItemHandler, refetchSelectedCards }) => {
-    const axiosSecure = useAxiosSecure()
-    const deleteCartHandler = (id) => {
-        axiosSecure.delete(`/delete-single-cart/${id}`)
-            .then(() => {
-                toast.success('delete successful')
+
+    const {user} = useAuth()
+    const deleteCartHandler = (classId) => {
+        console.log(classId);
+        fetch(`http://localhost:5000/delete-single-cart/${user?.email}`, {
+            method: 'DELETE',
+            headers: {
+                'content-type':'application/json'
+            },
+            body:JSON.stringify({classId})
+          })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                toast.success('successfully deleted')
                 refetchSelectedCards()
-                // TODO: REDIRECT PAYMENT HISTORY WITH NAVIGATE
             })
+            .catch(err => console.log(err));
     }
     return (
         <>

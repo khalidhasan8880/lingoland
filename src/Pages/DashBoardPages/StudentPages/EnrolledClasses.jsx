@@ -7,10 +7,10 @@ import EnrolledCard from "../../../components/EnrolledCard/EnrolledCard";
 
 const EnrolledClasses = () => {
     const axiosSecure = useAxiosSecure()
-    const {user} = useAuth()
-    const {data:classes, isLoading} = useQuery({
-        queryKey:['enrolledClasses', user?.email],
-        queryFn:async()=>axiosSecure.get(`/enrolled-classes/${user?.email}`).then(res=>res.data)
+    const { user } = useAuth()
+    const { data: classes, isLoading } = useQuery({
+        queryKey: ['enrolledClasses', user?.email],
+        queryFn: async () => axiosSecure.get(`/enrolled-classes/${user?.email}`).then(res => res.data)
     })
 
     if (isLoading) {
@@ -19,9 +19,11 @@ const EnrolledClasses = () => {
     console.log(classes);
     return (
         <div>
-            {
-                classes?.map(cls=> <EnrolledCard key={cls?._id} cls={cls}></EnrolledCard>)
-            }
+            <div className="grid gap-7">
+                {
+                    classes?.map(cls => <EnrolledCard key={cls?._id} cls={cls}></EnrolledCard>)
+                }
+            </div>
         </div>
     );
 };

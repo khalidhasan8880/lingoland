@@ -39,7 +39,7 @@ const useAxiosSecure = () => {
         };
 
         
-      }, [axiosSecure]);
+      }, [axiosSecure.interceptors.request,axiosSecure.interceptors.response]);
      return axiosSecure
 
 };
