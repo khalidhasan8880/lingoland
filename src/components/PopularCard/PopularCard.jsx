@@ -60,7 +60,7 @@ const PopularCard = ({ cls }) => {
                                 :
 
                                 <button
-                                    className="bg-gradient-to-r from-[#e4d0bf] to-[#e4a4a4] text-white text-center px-3 py-2 rounded-full active:top-0">Add to cart
+                                    className="bg-[#f47e7e] cursor-not-allowed text-white text-center px-3 py-2 rounded-full active:top-0">Add to cart
                                 </button>
                         }
 

@@ -15,13 +15,13 @@ import Loading from "../../../components/Loading/Loading";
 
 const Home = () => {
     
-
     const axiosSecure = useAxiosSecure()
     const {data:classes, isLoading} = useQuery({
         queryKey:['classes'],
         queryFn:async()=> axiosSecure.get('/classes/popular').then(res=>res.data)
     })
 
+    
     
     if (isLoading) {
         return <Loading></Loading>
@@ -39,7 +39,7 @@ const Home = () => {
             <Helmet>
                 <title>LINGOLAND | Home </title>
             </Helmet>
-            <Carousel></Carousel>
+            <Carousel ></Carousel>
             {/* ---------------------------------------------------- */}
             <PopularClasses classes={classes}></PopularClasses>
             <Instructor></Instructor>
