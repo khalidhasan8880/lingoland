@@ -9,10 +9,23 @@ import PopularClasses from "../PopularClasses/PopularClasses";
 import Carousel from "../Carousel/Carousel";
 import Instructor from "../../InstructorPage/Instructor";
 import AnimationSection from "../AnimationSection/AnimationSection";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import Loading from "../../../components/Loading/Loading";
 
 const Home = () => {
     
 
+    const axiosSecure = useAxiosSecure()
+    const {data:classes, isLoading} = useQuery({
+        queryKey:['classes'],
+        queryFn:async()=> axiosSecure.get('/classes/popular').then(res=>res.data)
+    })
+
+    
+    if (isLoading) {
+        return <Loading></Loading>
+    }
     // const axiosSecure = useAxiosSecure()
     // const {data:classes, isLoading} = useQuery({
     //     queryKey:['classes'],
@@ -28,7 +41,7 @@ const Home = () => {
             </Helmet>
             <Carousel></Carousel>
             {/* ---------------------------------------------------- */}
-            <PopularClasses></PopularClasses>
+            <PopularClasses classes={classes}></PopularClasses>
             <Instructor></Instructor>
             <AnimationSection></AnimationSection>
         </>

@@ -17,7 +17,7 @@ const PopularCard = ({ cls }) => {
             return openModal()
         }
         console.log(id);
-        axiosSecure.put('/carts', { email: user?.email, classId: id })
+        axiosSecure.put(`/carts/${user?.email}`, { email: user?.email, classId: id })
             .then(res => {
                 console.log(res.data);
                 if (res.data.insertedId) {

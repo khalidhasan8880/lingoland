@@ -69,19 +69,20 @@ const MySelectedClasses = () => {
             <Helmet>
                 <title>LINGOLAND | My Selected Classes </title>
             </Helmet>
-            <div className="flex flex-wrap items-center justify-between">
+            <div className="flex flex-wrap items-center justify-between mb-11">
                 <h1 className="text-2xl">Total selected Cart: {carts?.length}</h1>
                 {
                     carts.length !== 0 && <Link to='/payment' state={{ carts }} className="bg-gradient-to-r from-[#3de09b] to-[#00c4ee] text-white mt-11 text-center px-6 py-2 rounded-full">Pay For All Classes</Link>
                 }
             </div>
-            <div className="flex flex-wrap">
+            <div className="flex flex-wrap gap-7">
 
                 {
                     carts?.map(cart => <SelectedCard
                         key={cart._id}
                         cart={cart}
                         paymentForSingleItemHandler={paymentForSingleItemHandler}
+                        refetchSelectedCards={refetchSelectedCards}
                     ></SelectedCard>)
                 }
             </div>

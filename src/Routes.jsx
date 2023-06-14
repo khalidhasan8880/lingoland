@@ -21,6 +21,7 @@ import PaymentHistory from "./Pages/DashBoardPages/StudentPages/PaymentHistory";
 import EnrolledClasses from "./Pages/DashBoardPages/StudentPages/EnrolledClasses";
 import Classes from "./Pages/Classes/Classes";
 import InstructorClasses from "./Pages/InstructorClasses";
+import DashboardHome from "./Pages/DashBoardPages/DashboardHome/DashboardHome";
 // import AdminRoute from "./PrivetRoutes/AdminRoute";
 
 const router = createBrowserRouter([
@@ -65,6 +66,10 @@ const router = createBrowserRouter([
                 path:'/dashboard',
                 element:<PrivetRoute><Dashboard></Dashboard></PrivetRoute>,
                 children:[
+                    {
+                        path:'/dashboard',
+                        element:<PrivetRoute><DashboardHome></DashboardHome></PrivetRoute>
+                    },
                     {
                         path:'payment_history',
                         element:<PrivetRoute><PaymentHistory></PaymentHistory></PrivetRoute>

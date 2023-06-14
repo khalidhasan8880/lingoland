@@ -124,7 +124,9 @@ const Dashboard = () => {
 
 
             {
-                openDAshboardNav && <div className=" md:hidden backdrop-blur-xl rounded-lg fixed left-0 w-4/6 ">
+                openDAshboardNav && <div className=" md:hidden h-96 custom-blur ps-2  rounded-lg fixed left-0 w-4/6 " data-aos="fade-right"
+                data-aos-offset="500"
+                data-aos-duration="500">
 
                     <ul className="md:w-96 py-4 px-1 ">
                         {drawerLinks}
