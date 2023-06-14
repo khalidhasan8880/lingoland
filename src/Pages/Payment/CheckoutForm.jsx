@@ -12,7 +12,14 @@ const CheckoutForm = ({ totalPrice, carts }) => {
     const [clientSecret, setClientSecret] = useState('')
     const [processing, setProcessing] = useState(false)
     const { user } = useAuth()
-   
+    // token
+    const [token,setToken]=useState()
+    useEffect(()=>{
+        const token = localStorage.getItem('access-token')
+        setToken(token)
+        console.log(token);
+    },[])
+
     useEffect(() => {
         axiosSecure.post('/create-payment-intent', { totalPrice, name: user?.displayName, email: user?.email })
             .then(res => {
@@ -79,11 +86,23 @@ const CheckoutForm = ({ totalPrice, carts }) => {
             })
             .then(res=>{
                 console.log("payment success ", res.data);
-                axiosSecure.delete(`/delete/carts/${user?.email}`)
-                .then(res=>{
-                    console.log("deleted res",res.data);
-                    // TODO: REDIRECT PAYMENT HISTORY WITH NAVIGATE
+                // axiosSecure.delete(`/delete/carts/${user?.email}`)
+                // .then(res=>{
+                //     console.log("deleted res",res.data);
+                //     // TODO: REDIRECT PAYMENT HISTORY WITH NAVIGATE
+                // })
+                fetch(`http://localhost:5000/delete/carts/${user?.email}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'content-type': 'application/json',
+                        'authorization': `Bearer ${token}`
+                    }
                 })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                    })
+                    .catch(err => console.log(err));
             })
         }
 

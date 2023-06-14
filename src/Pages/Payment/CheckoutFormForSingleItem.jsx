@@ -13,6 +13,13 @@ const CheckoutFormForSingleItem = ({ price, classId, purchasedClassName, setIsOp
     const [clientSecret, setClientSecret] = useState('')
     const [processing, setProcessing] = useState(false)
     const { user, loading } = useAuth()
+    // token
+    const [token,setToken]=useState()
+    useEffect(()=>{
+        const token = localStorage.getItem('access-token')
+        setToken(token)
+        console.log(token);
+    },[])
 
     useEffect(() => {
         axiosSecure.post('/create-intent-for-single-item', { price, name: user?.displayName, email: user?.email })
@@ -67,6 +74,7 @@ const CheckoutFormForSingleItem = ({ price, classId, purchasedClassName, setIsOp
         }
 
         if (paymentIntent?.status === 'succeeded' && !loading && !!localStorage.getItem('access-token')) {
+            
             setProcessing(false)
             toast.success('Payment Succeeded')
             axiosSecure.post('/payment', {
@@ -81,24 +89,20 @@ const CheckoutFormForSingleItem = ({ price, classId, purchasedClassName, setIsOp
                 .then(res => {
                     console.log("payment success ", res.data);
                     setIsOpen(false)
-                    axiosSecure.delete(`/delete-single-cart/${user?.email}`, { classId })
-                        .then(res => {
-                            console.log("deleted res", res.data);
-                            fetch(`http://localhost:5000/delete-single-cart/${user?.email}`, {
-                                method: 'DELETE',
-                                headers: {
-                                    'content-type': 'application/json'
-                                },
-                                body: JSON.stringify({ classId })
-                            })
-                                .then(res => res.json())
-                                .then(data => {
-                                    console.log(data);
-                                    refetchSelectedCards()
-                                })
-                                .catch(err => console.log(err));
-                            // TODO: REDIRECT PAYMENT HISTORY WITH NAVIGATE
+                    fetch(`http://localhost:5000/delete-single-cart/${user?.email}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'content-type': 'application/json',
+                            'authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify({ classId })
+                    })
+                        .then(res => res.json())
+                        .then(data => {
+                            console.log(data);
+                            refetchSelectedCards()
                         })
+                        .catch(err => console.log(err));
                 })
         }
 

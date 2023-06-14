@@ -1,15 +1,25 @@
 import { Toaster, toast } from "react-hot-toast";
 import { useAuth } from "../../hooks/useAuth";
+import { useEffect, useState } from "react";
 
 const SelectedCard = ({ cart, paymentForSingleItemHandler, refetchSelectedCards }) => {
+    const [token,setToken]=useState()
+    useEffect(()=>{
+        const token = localStorage.getItem('access-token')
+        setToken(token)
+    },[])
+
+
 
     const {user} = useAuth()
     const deleteCartHandler = (classId) => {
+      
         console.log(classId);
         fetch(`http://localhost:5000/delete-single-cart/${user?.email}`, {
             method: 'DELETE',
             headers: {
-                'content-type':'application/json'
+                'content-type':'application/json',
+                "authorization": `Bearer ${token}`
             },
             body:JSON.stringify({classId})
           })
